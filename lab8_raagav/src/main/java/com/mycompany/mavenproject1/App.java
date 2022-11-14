@@ -19,6 +19,7 @@ public class App extends Application {
     public static Stage theStage;
     public static Thread tempThread;
     public static Thread buzzerThread;
+    public static Thread InfraredThread;
     @Override
     public void start(Stage stage) throws IOException {
         var scene = new Scene(new FXScreen(), 1060, 910);
@@ -52,20 +53,37 @@ public class App extends Application {
                 ca.callCamera();
             } else if(choice.equals("Buzzer")) {
                  Buzzer();
+            } else if (choice.equals("Infrared")){
+                InfraredMotionSensor();
             }else {
                 System.out.println("Invalid choice");
             }
         }
         System.out.println("Exit");
     }
+    public static void InfraredMotionSensor(){
+        InfraredThread = new Thread(() ->{
+            String path = "src/main/Python/SenseLED.py";
+            var infrared = new InfraredMotionSensorProcessBuilder(path);
+            String infraredString;
+            try {
+                infraredString = infrared.startProcess();
+                System.out.println(infraredString);        
+            } catch(IOException ex) {
+                Logger.getLogger(FXScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        InfraredThread.start();
+    }
+    
     public static void Buzzer(){
         buzzerThread = new Thread(() ->{
             String path = "src/main/Python/Doorbell.py";
             var buzzer = new BuzzerProcessBuilder(path);
-            String test;
+            String buzzerString;
             try {
-                test = buzzer.startProcess();
-                System.out.println(test);        
+                buzzerString = buzzer.startProcess();
+                System.out.println(buzzerString);        
             } catch(IOException ex) {
                 Logger.getLogger(FXScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
