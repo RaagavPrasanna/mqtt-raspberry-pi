@@ -7,7 +7,7 @@
 ########################################################################
 import RPi.GPIO as GPIO
 
-buzzerPin = 11    # define buzzerPin
+buzzerPin = 16    # define buzzerPin
 buttonPin = 12    # define buttonPin
 
 def setup():

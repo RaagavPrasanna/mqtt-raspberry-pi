@@ -18,7 +18,7 @@ public class App extends Application {
     //Allows the stage be easily accessible
     public static Stage theStage;
     public static Thread tempThread;
-    
+    public static Thread buzzerThread;
     @Override
     public void start(Stage stage) throws IOException {
         var scene = new Scene(new FXScreen(), 1060, 910);
@@ -50,11 +50,27 @@ public class App extends Application {
                 temperatureHumiditySensor();
             } else if(choice.equals("Camera")) {
                 ca.callCamera();
-            } else {
+            } else if(choice.equals("Buzzer")) {
+                 Buzzer();
+            }else {
                 System.out.println("Invalid choice");
             }
         }
         System.out.println("Exit");
+    }
+    public static void Buzzer(){
+        buzzerThread = new Thread(() ->{
+            String path = "src/main/Python/Doorbell.py";
+            var buzzer = new BuzzerProcessBuilder(path);
+            String test;
+            try {
+                test = buzzer.startProcess();
+                System.out.println(test);        
+            } catch(IOException ex) {
+                Logger.getLogger(FXScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        buzzerThread.start();
     }
     public static void temperatureHumiditySensor() {
         tempThread = new Thread(() -> {
