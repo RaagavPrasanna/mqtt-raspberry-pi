@@ -52,8 +52,16 @@ public class App extends Application {
             } else if(choice.equals("Camera")) {
                 ca.callCamera();
             } else if(choice.equals("Buzzer")) {
+                 // check is the thread is alive
+                 if(buzzerThread.isAlive()){
+                     buzzerThread.interrupt();
+                 }
                  Buzzer();
             } else if (choice.equals("Infrared")){
+                // check is the thread is alive
+                if(InfraredThread.isAlive()){
+                     InfraredThread.interrupt();
+                 }
                 InfraredMotionSensor();
             }else {
                 System.out.println("Invalid choice");
