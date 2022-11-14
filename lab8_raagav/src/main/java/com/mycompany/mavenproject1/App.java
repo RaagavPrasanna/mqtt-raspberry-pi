@@ -13,61 +13,66 @@ import java.util.Scanner;
 /**
  * JavaFX App
  */
-public class App extends Application {
+public class App /*extends Application*/ {
     
     //Allows the stage be easily accessible
-    public static Stage theStage;
+//    public static Stage theStage;
     public static Thread tempThread;
     public static Thread buzzerThread;
     public static Thread InfraredThread;
-    @Override
-    public void start(Stage stage) throws IOException {
-        var scene = new Scene(new FXScreen(), 1060, 910);
-        App.theStage = stage;
-        
-        //Set the active scene
-        theStage.setScene(scene);
-        theStage.show();
-        
-        // Make sure the application quits completely on close
-        theStage.setOnCloseRequest(t -> {
-            Platform.exit();
-            System.exit(0);
-        });
-    }
+//    @Override
+//    public void start(Stage stage) throws IOException {
+//        var scene = new Scene(new FXScreen(), 1060, 910);
+//        App.theStage = stage;
+//        
+//        //Set the active scene
+//        theStage.setScene(scene);
+//        theStage.show();
+//        
+//        // Make sure the application quits completely on close
+//        theStage.setOnCloseRequest(t -> {
+//            Platform.exit();
+//            System.exit(0);
+//        });
+//    }
 
     public static void main(String[] args) {
-        boolean run = true;
-        Scanner reader = new Scanner(System.in);
-        CameraApp ca = new CameraApp();
-        while(run) {
-            System.out.println("Select choice");
-            String choice = reader.nextLine();
-            if(choice.equals("Close")) {
-                System.out.println("Setting run to false");
-                run = false;
-            } else if(choice.equals("Sensor")){
-                System.out.println("Calling sensor");
-                temperatureHumiditySensor();
-            } else if(choice.equals("Camera")) {
-                ca.callCamera();
-            } else if(choice.equals("Buzzer")) {
-                 // check is the thread is alive
-                 if(buzzerThread.isAlive()){
-                     buzzerThread.interrupt();
-                 }
-                 Buzzer();
-            } else if (choice.equals("Infrared")){
-                // check is the thread is alive
-                if(InfraredThread.isAlive()){
-                     InfraredThread.interrupt();
-                 }
-                InfraredMotionSensor();
-            }else {
-                System.out.println("Invalid choice");
-            }
-        }
-        System.out.println("Exit");
+        System.out.println("Hello World");
+        
+        
+        
+        
+//        boolean run = true;
+//        Scanner reader = new Scanner(System.in);
+//        CameraApp ca = new CameraApp();
+//        while(run) {
+//            System.out.println("Select choice");
+//            String choice = reader.nextLine();
+//            if(choice.equals("Close")) {
+//                System.out.println("Setting run to false");
+//                run = false;
+//            } else if(choice.equals("Sensor")){
+//                System.out.println("Calling sensor");
+//                temperatureHumiditySensor();
+//            } else if(choice.equals("Camera")) {
+//                ca.callCamera();
+//            } else if(choice.equals("Buzzer")) {
+//                 // check is the thread is alive
+//                 if(buzzerThread.isAlive()){
+//                     buzzerThread.interrupt();
+//                 }
+//                 Buzzer();
+//            } else if (choice.equals("Infrared")){
+//                // check is the thread is alive
+//                if(InfraredThread.isAlive()){
+//                     InfraredThread.interrupt();
+//                 }
+//                InfraredMotionSensor();
+//            }else {
+//                System.out.println("Invalid choice");
+//            }
+//        }
+//        System.out.println("Exit");
     }
     public static void InfraredMotionSensor(){
         InfraredThread = new Thread(() ->{
