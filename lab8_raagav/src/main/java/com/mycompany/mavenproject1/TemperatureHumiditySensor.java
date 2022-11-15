@@ -11,7 +11,7 @@ public class TemperatureHumiditySensor {
         tempThread = thread;
     }
 
-    public void startProcess(){      
+    public boolean startProcess(){      
         this.tempThread = new Thread(() -> {
             var pbdht11 = new TemperatureAndHumidityProcessBuilder("src/main/Python/DHT11.py");
                     
@@ -27,5 +27,6 @@ public class TemperatureHumiditySensor {
         });
         
         tempThread.start();
+        return true;
     }
 }

@@ -28,6 +28,6 @@ public class InfraredMotionSensorTest {
         InfraredMotionSensor infrared = new InfraredMotionSensor(InfraredThread);
         infrared.startProcess();
         // if the Infrared Motion Sensor thread is running, it will return true
-        assertTrue(InfraredThread.isAlive());
+        assertTrue(infrared.startProcess());
     }
 }

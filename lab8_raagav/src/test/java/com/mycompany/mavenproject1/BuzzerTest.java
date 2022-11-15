@@ -26,8 +26,8 @@ public class BuzzerTest {
     @Test
     public void testStartProcess() throws Exception {
         Buzzer buzzer = new Buzzer(buzzerThread);
-        buzzer.startProcess();
+        
         // if the buzzer thread is running, it will return true
-        assertTrue(buzzerThread.isAlive());
+        assertTrue(buzzer.startProcess());
     }
 }

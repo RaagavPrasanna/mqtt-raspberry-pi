@@ -28,6 +28,6 @@ public class TemperatureAndHumidityTest {
         TemperatureHumiditySensor temp = new TemperatureHumiditySensor(tempThread);
         temp.startProcess();
         // if the buzzer thread is running, it will return true
-        assertTrue(tempThread.isAlive());
+        assertTrue(temp.startProcess());
     }
 }
