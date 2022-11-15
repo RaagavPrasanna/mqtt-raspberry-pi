@@ -60,6 +60,7 @@ public class App extends Application {
 
             // calling the buzzer
             } else if(choice.equals("Buzzer")) {
+                Buzzer buzzer = new Buzzer(buzzerThread);
                  System.out.println("Calling buzzer");
                  buzzer.startProcess();
             
