@@ -61,7 +61,6 @@ public class App extends Application {
             // calling the buzzer
             } else if(choice.equals("Buzzer")) {
                  System.out.println("Calling buzzer");
-                 Buzzer buzzer = new Buzzer(buzzerThread);
                  buzzer.startProcess();
             
             // calling the Infrared Motion Sensor
