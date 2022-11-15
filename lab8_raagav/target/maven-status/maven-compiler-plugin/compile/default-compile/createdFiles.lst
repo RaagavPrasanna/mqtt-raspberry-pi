@@ -10,7 +10,6 @@ com\mycompany\mavenproject1\FXScreen$1.class
 com\mycompany\mavenproject1\Camera$PicConfig.class
 com\mycompany\mavenproject1\Camera$VidConfig.class
 com\mycompany\mavenproject1\Camera$PicEncoding.class
-com\mycompany\mavenproject1\UpdateData.class
 module-info.class
 com\mycompany\mavenproject1\FXScreen.class
 com\mycompany\mavenproject1\Camera$PicConfig$Builder.class

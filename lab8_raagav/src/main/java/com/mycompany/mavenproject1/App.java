@@ -1,13 +1,23 @@
 package com.mycompany.mavenproject1;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableEntryException;
+import java.security.cert.CertificateException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import java.util.Scanner;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+// import javafx.application.Application;
+// import javafx.application.Platform;
+// import javafx.scene.Scene;
+// import javafx.stage.Stage;
+//import java.util.Scanner;
 
 
 /**
@@ -20,6 +30,7 @@ public class App /*extends Application*/ {
     public static Thread tempThread;
     public static Thread buzzerThread;
     public static Thread InfraredThread;
+    public static KeyStore ks;
 //    @Override
 //    public void start(Stage stage) throws IOException {
 //        var scene = new Scene(new FXScreen(), 1060, 910);
@@ -36,11 +47,13 @@ public class App /*extends Application*/ {
 //        });
 //    }
 
-    public static void main(String[] args) {
-        System.out.println("Hello World");
+    public static void main(String[] args) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException{
         
         
-        
+        loadKeyStore("keystore123", "src\\main\\resources\\ProjectKeystore\\ECcertif.ks");
+        storeKeyInKeyStore("raagav", "raagav123");
+        getKey("raagav", "raagav123");
+        //System.out.println("Keystore is fine");
         
 //        boolean run = true;
 //        Scanner reader = new Scanner(System.in);
@@ -74,6 +87,32 @@ public class App /*extends Application*/ {
 //        }
 //        System.out.println("Exit");
     }
+    
+    public static void loadKeyStore(String psswd, String path) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
+        ks = KeyStore.getInstance(new File(path), psswd.toCharArray());
+        System.out.println("Successfully loaded KeyStore");
+    }
+    
+    public static void storeKeyInKeyStore(String keyAlias, String keyPsswd) throws NoSuchAlgorithmException, KeyStoreException {
+        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+        keyGenerator.init(256);
+        SecretKey sk = keyGenerator.generateKey(); 
+        
+        KeyStore.SecretKeyEntry secretKeyEntry = new KeyStore.SecretKeyEntry(sk);
+        
+        KeyStore.ProtectionParameter entryPassword =  new KeyStore.PasswordProtection(keyPsswd.toCharArray());
+        
+        ks.setEntry(keyAlias, secretKeyEntry, entryPassword);
+        System.out.println("Successfully added key");
+    }
+    
+    public static void getKey(String keyAlias, String psswd) throws NoSuchAlgorithmException, KeyStoreException, UnrecoverableEntryException {
+        KeyStore.ProtectionParameter entryPassword = new KeyStore.PasswordProtection(psswd.toCharArray());
+        
+        KeyStore.Entry keyEntry = ks.getEntry(keyAlias, entryPassword);
+        System.out.println("Got key: " + keyEntry);
+    }
+    
     public static void InfraredMotionSensor(){
         InfraredThread = new Thread(() ->{
             String path = "src/main/Python/SenseLED.py";

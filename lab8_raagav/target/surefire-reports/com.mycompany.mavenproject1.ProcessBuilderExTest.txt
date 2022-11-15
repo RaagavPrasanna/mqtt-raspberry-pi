@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------
 Test set: com.mycompany.mavenproject1.ProcessBuilderExTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.281 s - in com.mycompany.mavenproject1.ProcessBuilderExTest
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.037 s <<< FAILURE! - in com.mycompany.mavenproject1.ProcessBuilderExTest
+testStartProcess  Time elapsed: 0.026 s  <<< ERROR!
+java.io.IOException: Cannot run program "C:\Dev\python3": CreateProcess error=2, The system cannot find the file specified
+	at com.mycompany.mavenproject1/com.mycompany.mavenproject1.ProcessBuilderExTest.testStartProcess(ProcessBuilderExTest.java:31)
+Caused by: java.io.IOException: CreateProcess error=2, The system cannot find the file specified
+	at com.mycompany.mavenproject1/com.mycompany.mavenproject1.ProcessBuilderExTest.testStartProcess(ProcessBuilderExTest.java:31)
+
