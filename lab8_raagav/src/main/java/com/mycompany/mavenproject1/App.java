@@ -50,9 +50,6 @@ public class App extends Application {
 
             // calling the sensor
             } else if(choice.equals("Sensor")){
-                //if(tempThread.isAlive()){
-                //    tempThread.interrupt();
-               // }
                 System.out.println("Calling sensor");
                 TemperatureHumiditySensor temp = new TemperatureHumiditySensor(tempThread);
                 temp.startProcess();
@@ -63,20 +60,11 @@ public class App extends Application {
 
             // calling the buzzer
             } else if(choice.equals("Buzzer")) {
-                Buzzer buzzer = new Buzzer(buzzerThread);
-                 // check is the thread is alive
-//                 if(buzzerThread.isAlive()){
-  //                   buzzerThread.interrupt();
-    //             }
                  System.out.println("Calling buzzer");
                  buzzer.startProcess();
             
             // calling the Infrared Motion Sensor
             } else if (choice.equals("Infrared")){
-                // check is the thread is alive
-                //if(InfraredThread.isAlive()){
-               //      InfraredThread.interrupt();
-               //  }
                 System.out.println("Calling Infrared Motion Sensor");
                 InfraredMotionSensor infrared = new InfraredMotionSensor(InfraredThread);
                 infrared.startProcess();

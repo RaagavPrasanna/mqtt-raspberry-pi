@@ -11,7 +11,7 @@ public class InfraredMotionSensor {
         InfraredThread = thread;
     }
 
-    public void startProcess(){      
+    public boolean startProcess(){      
         this.InfraredThread = new Thread(() ->{
             String path = "src/main/Python/SenseLED.py";
             var infrared = new InfraredMotionSensorProcessBuilder(path);
@@ -24,5 +24,6 @@ public class InfraredMotionSensor {
             }
         });
         InfraredThread.start();
+        return true;
     }
 }

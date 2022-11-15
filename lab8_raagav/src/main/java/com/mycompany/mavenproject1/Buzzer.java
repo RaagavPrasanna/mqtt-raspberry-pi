@@ -10,8 +10,7 @@ public class Buzzer {
         buzzerThread = thread;
     }
 
-    public void startProcess(){
-        System.out.println(buzzerThread.getState());
+    public boolean startProcess(){      
         this.buzzerThread = new Thread(() ->{
             String path = "src/main/Python/Doorbell.py";
             var buzzer = new BuzzerProcessBuilder(path);
@@ -24,5 +23,6 @@ public class Buzzer {
             }
         });
         buzzerThread.start();
+        return true;
     }
 }
