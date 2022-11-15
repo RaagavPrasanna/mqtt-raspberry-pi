@@ -2,26 +2,26 @@ package com.mycompany.mavenproject1;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import com.mycompany.mavenproject1.BuzzerProcessBuilder;
+import com.mycompany.mavenproject1.InfraredMotionSensorProcessBuilder;
 
 /**
  *
- * @author Carlton Davis and Raagav Prasanna
+ * @author Tuan Danh Huynh
  */
 
 /* Test class for ProcessBuilderEx class */
-public class BuzzerProcessBuilderTest {
+public class TemperatureAndHumidityProcessBuilderTest {
     
-    public BuzzerProcessBuilder processInstance;
+    public InfraredMotionSensorProcessBuilder processInstance;
     
     //Constructor for the test class
-    public BuzzerProcessBuilderTest() {
-        String pathAndFile = "src/main/Python/Doorbell.py";
-        processInstance = new BuzzerProcessBuilder(pathAndFile);
+    public TemperatureAndHumidityProcessBuilderTest() {
+        String pathAndFile = "src/main/Python/SebseLED.py";
+        processInstance = new InfraredMotionSensorProcessBuilder(pathAndFile);
     } 
     
     /**
-     * Test of startProcess method, of class BuzzerProcessBuilderTest.
+     * Test of startProcess method, of class TemperatureAndHumidityProcessBuilderTest.
      * @throws java.lang.Exception
      */
     @Test

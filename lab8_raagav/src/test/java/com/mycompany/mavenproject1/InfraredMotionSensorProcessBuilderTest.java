@@ -21,7 +21,7 @@ public class InfraredMotionSensorProcessBuilderTest {
     } 
     
     /**
-     * Test of startProcess method, of class ProcessBuilderEx.
+     * Test of startProcess method, of class InfraredMotionSensorProcessBuilderTest.
      * @throws java.lang.Exception
      */
     @Test
