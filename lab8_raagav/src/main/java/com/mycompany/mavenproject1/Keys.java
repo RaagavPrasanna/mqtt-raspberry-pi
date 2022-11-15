@@ -7,9 +7,14 @@ package com.mycompany.mavenproject1;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.Signature;
+import java.security.SignatureException;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 import javax.crypto.KeyGenerator;
@@ -27,6 +32,7 @@ public class Keys {
     public Keys(String psswd, String filepath) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
         storePath = filepath;
         ks = KeyStore.getInstance(new File(filepath), psswd.toCharArray());
+        
         System.out.println("Successfully loaded KeyStore");
     }
     
@@ -49,6 +55,17 @@ public class Keys {
         SecretKey sk = (SecretKey)ks.getKey(keyAlias, psswd.toCharArray());
         System.out.println("Got key: " + sk);
         return sk;
+    }
+    
+    public String verifyAndReturnInput(PrivateKey pk, String input) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException, UnsupportedEncodingException {
+        Signature sign = Signature.getInstance("SHA256withDSA");
+        sign.initSign(pk);
+        byte[] bytes = input.getBytes();
+        sign.update(bytes);
+        byte[] signature = sign.sign();
+        System.out.println("Digital signature for given text: "+new String(signature, "UTF8"));
+        
+        return new String(bytes, "UTF8");
     }
     
     private void storeKeyStore(String storePass) throws IOException, KeyStoreException, NoSuchAlgorithmException, CertificateException{
