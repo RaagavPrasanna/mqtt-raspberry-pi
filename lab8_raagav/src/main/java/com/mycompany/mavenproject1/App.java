@@ -48,11 +48,12 @@ public class App /*extends Application*/ {
 //    }
 
     public static void main(String[] args) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException{
-        
-        
-        loadKeyStore("keystore123", "src\\main\\resources\\ProjectKeystore\\ECcertif.ks");
-        storeKeyInKeyStore("raagav", "raagav123");
-        getKey("raagav", "raagav123");
+        Keys k = new Keys("keystore123", "src\\main\\resources\\ProjectKeystore\\ECcertif.ks");
+//        k.storeKeyInKeyStore("raagav", "raagav123", "keystore123");
+        System.out.println(k.getKey("raagav", "raagav123"));
+//        loadKeyStore("keystore123", "src\\main\\resources\\ProjectKeystore\\ECcertif.ks");
+//        storeKeyInKeyStore("raagav", "raagav123");
+//        getKey("raagav", "raagav123");
         //System.out.println("Keystore is fine");
         
 //        boolean run = true;
