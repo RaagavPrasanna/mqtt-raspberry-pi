@@ -46,54 +46,44 @@ public class App /*extends Application*/ {
         });
     }
 
-    public static void main(String[] args) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException {
-                         
-    }
-    
-    public static void InfraredMotionSensor(){
-        InfraredThread = new Thread(() ->{
-            String path = "src/main/Python/SenseLED.py";
-            var infrared = new InfraredMotionSensorProcessBuilder(path);
-            String infraredString;
-            try {
-                infraredString = infrared.startProcess();
-                System.out.println(infraredString);        
-            } catch(IOException ex) {
-                Logger.getLogger(FXScreen.class.getName()).log(Level.SEVERE, null, ex);
+    public static void main(String[] args) {
+        boolean run = true;
+        Scanner reader = new Scanner(System.in);
+        CameraApp ca = new CameraApp();
+        while(run) {
+            System.out.println("Select choice (Close, Sensor, Camera, Buzzer, Infrared)");
+            String choice = reader.nextLine();
+            // closing the app
+            if(choice.equals("Close")) {
+                System.out.println("Setting run to false");
+                run = false;
+
+            // calling the sensor
+            } else if(choice.equals("Sensor")){
+                System.out.println("Calling sensor");
+                TemperatureHumiditySensor temp = new TemperatureHumiditySensor(tempThread);
+                temp.startProcess();
+
+            // calling the camera
+            } else if(choice.equals("Camera")) {
+                ca.callCamera();
+
+            // calling the buzzer
+            } else if(choice.equals("Buzzer")) {
+                Buzzer buzzer = new Buzzer(buzzerThread);
+                 System.out.println("Calling buzzer");
+                 buzzer.startProcess();
+            
+            // calling the Infrared Motion Sensor
+            } else if (choice.equals("Infrared")){
+                System.out.println("Calling Infrared Motion Sensor");
+                InfraredMotionSensor infrared = new InfraredMotionSensor(InfraredThread);
+                infrared.startProcess();
+
+            }else {
+                System.out.println("Invalid choice");
             }
-        });
-        InfraredThread.start();
-    }
-    
-    public static void Buzzer(){
-        buzzerThread = new Thread(() ->{
-            String path = "src/main/Python/Doorbell.py";
-            var buzzer = new BuzzerProcessBuilder(path);
-            String buzzerString;
-            try {
-                buzzerString = buzzer.startProcess();
-                System.out.println(buzzerString);        
-            } catch(IOException ex) {
-                Logger.getLogger(FXScreen.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        buzzerThread.start();
-    }
-    public static void temperatureHumiditySensor() {
-        tempThread = new Thread(() -> {
-            var pbdht11 = new ProcessBuilderEx("src/main/Python/DHT11.py");
-                    
-            String tempOutput;
-            try {
-                tempOutput = pbdht11.startProcess();
-                System.out.println("Temperature: " +tempOutput.split(" ")[1]);
-                System.out.println("Humidity: " +tempOutput.split(" ")[0]);
-                        
-            } catch(IOException ex) {
-                Logger.getLogger(FXScreen.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        
-        tempThread.start();
+        }
+        System.out.println("Exit");
     }
 }

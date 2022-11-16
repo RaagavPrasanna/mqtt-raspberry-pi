@@ -10,7 +10,7 @@ import java.util.List;
  * @author Carlton Davis
  */
 
-public class ProcessBuilderEx {
+public class TemperatureAndHumidityProcessBuilder {
     
     //Stores the output from the process
     private String theOutput;
@@ -18,7 +18,7 @@ public class ProcessBuilderEx {
     private ProcessBuilder processBuilder;
     
    //The constructor to execute Python command takes a String
-    public ProcessBuilderEx(String theApp) {
+    public TemperatureAndHumidityProcessBuilder(String theApp) {
         this.processBuilder = new ProcessBuilder();
    
         //Determine if the OS is MS Windows 

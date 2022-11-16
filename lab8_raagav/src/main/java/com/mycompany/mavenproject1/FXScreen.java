@@ -127,7 +127,7 @@ public class FXScreen extends HBox {
         String theCmd = "src/main/Python/helloWorld.py";
 
         //ProcessBuilder object use to run the external command
-        var theProcessBuilder = new ProcessBuilderEx(theCmd);
+        var theProcessBuilder = new TemperatureAndHumidityProcessBuilder(theCmd);
 
         //Get the output from the process
         String theOutput = theProcessBuilder.startProcess();
@@ -212,7 +212,7 @@ public class FXScreen extends HBox {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    var pbdht11 = new ProcessBuilderEx("src/main/Python/DHT11.py");
+                    var pbdht11 = new TemperatureAndHumidityProcessBuilder("src/main/Python/DHT11.py");
                     
                     String tempOutput;
                     try {
