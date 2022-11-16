@@ -1,5 +1,6 @@
 package com.mycompany.mavenproject1;
 
+import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,7 +24,7 @@ import java.util.Scanner;
 /**
  * JavaFX App
  */
-public class App /*extends Application*/ {
+public class App extends Application {
     
     //Allows the stage be easily accessible
     public static Stage theStage;
@@ -46,10 +47,31 @@ public class App /*extends Application*/ {
         });
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException {
         boolean run = true;
         Scanner reader = new Scanner(System.in);
         CameraApp ca = new CameraApp();
+        boolean invalidLogin = true; 
+        String username = "";
+        String password = "";
+        
+        Keys k = new Keys("keystore123", "src\\main\\resources\\ProjectKeystore\\ECcertif.ks");
+        
+        
+        while(invalidLogin) {
+            try {
+                System.out.println("Enter username");
+                username = reader.nextLine();
+                System.out.println("Enter password");
+                password = reader.nextLine();
+                
+                k.getKey(username, password);
+                invalidLogin = false;
+            } catch(Exception e) {
+                System.out.println("Invalid username or password");
+            }
+        }
+
         while(run) {
             System.out.println("Select choice (Close, Sensor, Camera, Buzzer, Infrared)");
             String choice = reader.nextLine();
