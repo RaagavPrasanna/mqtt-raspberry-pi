@@ -2,7 +2,7 @@ package com.mycompany.mavenproject1;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import com.mycompany.mavenproject1.InfraredMotionSensorProcessBuilder;
+import com.mycompany.mavenproject1.TemperatureAndHumidityProcessBuilder;
 
 /**
  *
@@ -12,12 +12,12 @@ import com.mycompany.mavenproject1.InfraredMotionSensorProcessBuilder;
 /* Test class for ProcessBuilderEx class */
 public class TemperatureAndHumidityProcessBuilderTest {
     
-    public InfraredMotionSensorProcessBuilder processInstance;
+    public TemperatureAndHumidityProcessBuilder processInstance;
     
     //Constructor for the test class
     public TemperatureAndHumidityProcessBuilderTest() {
         String pathAndFile = "src/main/Python/SebseLED.py";
-        processInstance = new InfraredMotionSensorProcessBuilder(pathAndFile);
+        processInstance = new TemperatureAndHumidityProcessBuilder(pathAndFile);
     } 
     
     /**
