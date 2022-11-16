@@ -1,12 +1,23 @@
 package com.mycompany.mavenproject1;
 
+import java.io.Console;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableEntryException;
+import java.security.cert.CertificateException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+ import javafx.application.Application;
+ import javafx.application.Platform;
+ import javafx.scene.Scene;
+ import javafx.stage.Stage;
 import java.util.Scanner;
 
 
@@ -36,10 +47,31 @@ public class App extends Application {
         });
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException {
         boolean run = true;
         Scanner reader = new Scanner(System.in);
         CameraApp ca = new CameraApp();
+        boolean invalidLogin = true; 
+        String username = "";
+        String password = "";
+        
+        Keys k = new Keys("keystore123", "src\\main\\resources\\ProjectKeystore\\ECcertif.ks");
+        
+        
+        while(invalidLogin) {
+            try {
+                System.out.println("Enter username");
+                username = reader.nextLine();
+                System.out.println("Enter password");
+                password = reader.nextLine();
+                
+                k.getKey(username, password);
+                invalidLogin = false;
+            } catch(Exception e) {
+                System.out.println("Invalid username or password");
+            }
+        }
+
         while(run) {
             System.out.println("Select choice (Close, Sensor, Camera, Buzzer, Infrared)");
             String choice = reader.nextLine();

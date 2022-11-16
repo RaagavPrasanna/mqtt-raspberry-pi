@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+C:\Users\raaga\OneDrive\Desktop\DawsonClasses\ComputerScience\5th_Semester\Data_Comm\Final_Project\data_communication_project\lab8_raagav\src\main\java\com\mycompany\mavenproject1\SystemInfo.java
+C:\Users\raaga\OneDrive\Desktop\DawsonClasses\ComputerScience\5th_Semester\Data_Comm\Final_Project\data_communication_project\lab8_raagav\src\main\java\com\mycompany\mavenproject1\Camera.java
+C:\Users\raaga\OneDrive\Desktop\DawsonClasses\ComputerScience\5th_Semester\Data_Comm\Final_Project\data_communication_project\lab8_raagav\src\main\java\com\mycompany\mavenproject1\Component.java
+C:\Users\raaga\OneDrive\Desktop\DawsonClasses\ComputerScience\5th_Semester\Data_Comm\Final_Project\data_communication_project\lab8_raagav\src\main\java\com\mycompany\mavenproject1\UpdateData.java
+C:\Users\raaga\OneDrive\Desktop\DawsonClasses\ComputerScience\5th_Semester\Data_Comm\Final_Project\data_communication_project\lab8_raagav\src\main\java\module-info.java
+C:\Users\raaga\OneDrive\Desktop\DawsonClasses\ComputerScience\5th_Semester\Data_Comm\Final_Project\data_communication_project\lab8_raagav\src\main\java\com\mycompany\mavenproject1\App.java
+C:\Users\raaga\OneDrive\Desktop\DawsonClasses\ComputerScience\5th_Semester\Data_Comm\Final_Project\data_communication_project\lab8_raagav\src\main\java\com\mycompany\mavenproject1\CameraApp.java
+C:\Users\raaga\OneDrive\Desktop\DawsonClasses\ComputerScience\5th_Semester\Data_Comm\Final_Project\data_communication_project\lab8_raagav\src\main\java\com\mycompany\mavenproject1\InfraredMotionSensorProcessBuilder.java
+C:\Users\raaga\OneDrive\Desktop\DawsonClasses\ComputerScience\5th_Semester\Data_Comm\Final_Project\data_communication_project\lab8_raagav\src\main\java\com\mycompany\mavenproject1\BuzzerProcessBuilder.java
+C:\Users\raaga\OneDrive\Desktop\DawsonClasses\ComputerScience\5th_Semester\Data_Comm\Final_Project\data_communication_project\lab8_raagav\src\main\java\com\mycompany\mavenproject1\ProcessBuilderEx.java
+C:\Users\raaga\OneDrive\Desktop\DawsonClasses\ComputerScience\5th_Semester\Data_Comm\Final_Project\data_communication_project\lab8_raagav\src\main\java\com\mycompany\mavenproject1\FXScreen.java
+C:\Users\raaga\OneDrive\Desktop\DawsonClasses\ComputerScience\5th_Semester\Data_Comm\Final_Project\data_communication_project\lab8_raagav\src\main\java\com\mycompany\mavenproject1\IApplicationCamera.java
+=======
 /home/tuandanh/project/data_communication_project/lab8_raagav/src/main/java/com/mycompany/mavenproject1/UpdateData.java
 /home/tuandanh/project/data_communication_project/lab8_raagav/src/main/java/com/mycompany/mavenproject1/Buzzer.java
 /home/tuandanh/project/data_communication_project/lab8_raagav/src/main/java/com/mycompany/mavenproject1/CameraApp.java
@@ -13,3 +27,4 @@
 /home/tuandanh/project/data_communication_project/lab8_raagav/src/main/java/com/mycompany/mavenproject1/Camera.java
 /home/tuandanh/project/data_communication_project/lab8_raagav/src/main/java/com/mycompany/mavenproject1/SystemInfo.java
 /home/tuandanh/project/data_communication_project/lab8_raagav/src/main/java/com/mycompany/mavenproject1/ProcessBuilderEx.java
+>>>>>>> edee519bab0279136f98203b60eb9412b257d614
