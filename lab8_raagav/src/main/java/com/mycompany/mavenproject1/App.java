@@ -5,9 +5,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.InvalidKeyException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 import java.util.logging.Level;
@@ -47,7 +49,7 @@ public class App extends Application {
         });
     }
 
-    public static void main(String[] args) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException {
+    public static void main(String[] args) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, InvalidKeyException, SignatureException {
         boolean run = true;
         Scanner reader = new Scanner(System.in);
         CameraApp ca = new CameraApp();
@@ -55,7 +57,7 @@ public class App extends Application {
         String username = "";
         String password = "";
         
-        Keys k = new Keys("keystore123", "src\\main\\resources\\ProjectKeystore\\ECcertif.ks");
+        Keys k = new Keys("keystore123", "src/main/resources/ProjectKeystore/ECcertif.ks");
         
         
         while(invalidLogin) {
