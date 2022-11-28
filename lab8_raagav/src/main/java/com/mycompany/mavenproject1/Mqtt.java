@@ -41,7 +41,7 @@ public class Mqtt {
 
         // subscribe to the topic "my/test/topic"
         client.subscribeWith()
-                .topicFilter("my/test/topic")
+                .topicFilter("Test")
                 .send();
 
         // set a callback that is called when a message is received (using the async API style)
@@ -54,10 +54,10 @@ public class Mqtt {
             client.disconnect();
         });
 
-        // publish a message to the topic "my/test/topic"
-        client.publishWith()
-                .topic("my/test/topic")
-                .payload(UTF_8.encode("Hello"))
-                .send();
+//        // publish a message to the topic "my/test/topic"
+//        client.publishWith()
+//                .topic("my/test/topic")
+//                .payload(UTF_8.encode("Hello"))
+//                .send();
     }
 }
