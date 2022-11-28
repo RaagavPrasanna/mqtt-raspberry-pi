@@ -43,6 +43,10 @@ public class Mqtt {
         client.subscribeWith()
                 .topicFilter("Test")
                 .send();
+        
+        client.subscribeWith()
+                .topicFilter("Test2")
+                .send();
 
         // set a callback that is called when a message is received (using the async API style)
         client.toAsync().publishes(ALL, publish -> {
@@ -51,7 +55,7 @@ public class Mqtt {
                 UTF_8.decode(publish.getPayload().get()));
 
             // disconnect the client after a message was received
-            client.disconnect();
+            //client.disconnect();
         });
 
 //        // publish a message to the topic "my/test/topic"
