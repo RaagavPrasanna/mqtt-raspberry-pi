@@ -16,12 +16,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
- import javafx.application.Application;
- import javafx.application.Platform;
- import javafx.scene.Scene;
- import javafx.stage.Stage;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import java.util.Scanner;
-
+import com.hivemq.client.mqtt.mqtt5.exceptions.Mqtt5ConnAckException;
+import java.util.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 /**
  * JavaFX App
@@ -56,10 +59,11 @@ public class App extends Application {
         boolean invalidLogin = true; 
         String username = "";
         String password = "";
+        Mqtt m = null;
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        
         
         Keys k = new Keys("keystore123", "src/main/resources/ProjectKeystore/ECcertif.ks");
-        
-        
         while(invalidLogin) {
             try {
                 System.out.println("Enter username");
@@ -67,12 +71,14 @@ public class App extends Application {
                 System.out.println("Enter password");
                 password = reader.nextLine();
                 
-                k.getKey(username, password);
+                m = new Mqtt(username,password);
                 invalidLogin = false;
-            } catch(Exception e) {
+            } catch(Mqtt5ConnAckException me) {
                 System.out.println("Invalid username or password");
             }
         }
+ 
+        
 
         while(run) {
             System.out.println("Select choice (Close, Sensor, Camera, Buzzer, Infrared)");
@@ -97,7 +103,10 @@ public class App extends Application {
                 Buzzer buzzer = new Buzzer(buzzerThread);
                  System.out.println("Calling buzzer");
                  buzzer.startProcess();
-            
+                 
+                 Timestamp ts = new Timestamp(System.currentTimeMillis());
+                 
+                 m.sendBuzzerMessage("Buzzer" +username +" pressed at: " +sdf.format(ts));
             // calling the Infrared Motion Sensor
             } else if (choice.equals("Infrared")){
                 System.out.println("Calling Infrared Motion Sensor");
