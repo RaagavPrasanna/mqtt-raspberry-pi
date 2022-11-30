@@ -45,13 +45,7 @@ public class Mqtt {
         System.out.println("Connected successfully");
 
         // subscribe to the topic "my/test/topic"
-        client.subscribeWith()
-                .topicFilter("Test")
-                .send();
 
-        client.subscribeWith()
-                .topicFilter("Test2")
-                .send();
         
         client.subscribeWith()
                 .topicFilter("BuzzerRaagavPrasanna")
@@ -64,7 +58,31 @@ public class Mqtt {
         client.subscribeWith()
                 .topicFilter("BuzzerDanhHuynh")
                 .send();
+        
+        client.subscribeWith()
+                .topicFilter("CameraTakenRaagavPrasanna")
+                .send();
+        
+        client.subscribeWith()
+                .topicFilter("CameraTakenAidanCatriel")
+                .send();
 
+        client.subscribeWith()
+                .topicFilter("CameraTakenDanhHuynh")
+                .send();
+                
+        client.subscribeWith()
+                .topicFilter("CameraPictureRaagavPrasanna")
+                .send();
+        
+        client.subscribeWith()
+                .topicFilter("CameraPictureAidanCatriel")
+                .send();
+
+        client.subscribeWith()
+                .topicFilter("CameraPictureDanhHuynh")
+                .send();
+        
         // set a callback that is called when a message is received (using the async API style)
         client.toAsync().publishes(ALL, publish -> {
             System.out.println("Received message: "
@@ -88,6 +106,22 @@ public class Mqtt {
                 .payload(UTF_8.encode(msg))
                 .send();
     }
+    
+    public void sendCameraTakenMessage(String msg) {
+        client.publishWith()
+                .topic("CameraTaken"+username)
+                .payload(UTF_8.encode(msg))
+                .send(); 
+    }
+    
+    public void sendCameraPictureMessage(String msg) {
+        client.publishWith()
+                .topic("CameraPicture"+username)
+                .payload(UTF_8.encode(msg))
+                .send(); 
+    }
+    
+    
 
 //    public static void main(String[] args) throws Exception {
 //

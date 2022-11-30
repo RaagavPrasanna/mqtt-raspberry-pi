@@ -97,7 +97,11 @@ public class App extends Application {
             // calling the camera
             } else if(choice.equals("Camera")) {
                 ca.callCamera();
-
+                String imgData = ca.getRecentImageBytes();
+                
+                Timestamp ts = new Timestamp(System.currentTimeMillis());
+                m.sendCameraTakenMessage("Picture taken at: " +sdf.format(ts));
+                m.sendCameraPictureMessage(imgData);
             // calling the buzzer
             } else if(choice.equals("Buzzer")) {
                 Buzzer buzzer = new Buzzer(buzzerThread);
