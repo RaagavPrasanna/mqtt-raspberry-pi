@@ -6,7 +6,7 @@
 # modification: 2019/12/28
 ########################################################################
 import RPi.GPIO as GPIO
-
+from datetime import datetime
 buzzerPin = 16    # define buzzerPin
 buttonPin = 12    # define buttonPin
 
@@ -19,10 +19,14 @@ def loop():
     while True:
         if GPIO.input(buttonPin)==GPIO.LOW: # if button is pressed
             GPIO.output(buzzerPin,GPIO.HIGH) # turn on buzzer
-            print ('buzzer turned on >>>')
+            #when the button is pressed, create the timestamp
+            dt = datetime.now()
+            ts = datetime.timestamp(dt)
+            # print out timestamp in format like 2022-12-03 21:21:12
+            print(ts)
+            
         else : # if button is relessed
             GPIO.output(buzzerPin,GPIO.LOW) # turn off buzzer
-            print ('buzzer turned off <<<')
 
 def destroy():
     GPIO.cleanup()                     # Release all GPIO

@@ -34,6 +34,8 @@ public class FXScreen extends HBox {
     //Build the screen
     private void buildScreen() throws IOException {
 
+
+
         // Define our local setting (used by the clock)
         var locale = new Locale("en", "CA");
 
@@ -199,6 +201,36 @@ public class FXScreen extends HBox {
         //Add the VBoxes to the root layout, which is a HBox
         this.getChildren().addAll(tilesColumn1, tilesColumn2, tilesColumn3);
         this.setSpacing(5);
+    }
+    // HAVEN"T TEST YET
+    private void startBuzzerThread() {
+        Thread tempThread = new Thread(() -> {
+           while(running) {
+               try {
+                   Thread.sleep(5000);
+               } catch(InterruptedException ex) {
+                   System.err.println("Sensor thread got interupted");
+               }
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    var buzzerProcess = new BuzzerProcessBuilder("src/main/Python/Doorbell.py");
+                    String buzzerOutPutTimeStame;
+                    try {
+                        // buzzer OutPutTimeStame should have format like 2022-12-03 21:21:12
+                        buzzerOutPutTimeStame = buzzerProcess.startProcess();
+                        // MISSING ADD MESSAGE TO PAYLOAD
+
+                        
+                    } catch(IOException ex) {
+                        Logger.getLogger(FXScreen.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+           }
+        });
+        
+        tempThread.start();
     }
 
     private void startSensorThread() {
