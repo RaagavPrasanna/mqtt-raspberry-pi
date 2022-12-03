@@ -52,62 +52,62 @@ public class App extends Application {
     public static void main(String[] args) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, InvalidKeyException, SignatureException {
         boolean run = true;
         Scanner reader = new Scanner(System.in);
-        CameraApp ca = new CameraApp();
-        boolean invalidLogin = true; 
-        String username = "";
-        String password = "";
-        
-        Keys k = new Keys("keystore123", "src/main/resources/ProjectKeystore/ECcertif.ks");
-        
-        
-        while(invalidLogin) {
-            try {
-                System.out.println("Enter username");
-                username = reader.nextLine();
-                System.out.println("Enter password");
-                password = reader.nextLine();
-                
-                k.getKey(username, password);
-                invalidLogin = false;
-            } catch(Exception e) {
-                System.out.println("Invalid username or password");
-            }
-        }
+        //CameraApp ca = new CameraApp();
+//        boolean invalidLogin = true; 
+//        String username = "";
+//        String password = "";
+//        
+//        Keys k = new Keys("keystore123", "src/main/resources/ProjectKeystore/ECcertif.ks");
+        launch();
+//        
+//        while(invalidLogin) {
+//            try {
+//                System.out.println("Enter username");
+//                username = reader.nextLine();
+//                System.out.println("Enter password");
+//                password = reader.nextLine();
+//                
+//                k.getKey(username, password);
+//                invalidLogin = false;
+//            } catch(Exception e) {
+//                System.out.println("Invalid username or password");
+//            }
+//        }
 
-        while(run) {
-            System.out.println("Select choice (Close, Sensor, Camera, Buzzer, Infrared)");
-            String choice = reader.nextLine();
-            // closing the app
-            if(choice.equals("Close")) {
-                System.out.println("Setting run to false");
-                run = false;
-
-            // calling the sensor
-            } else if(choice.equals("Sensor")){
-                System.out.println("Calling sensor");
-                TemperatureHumiditySensor temp = new TemperatureHumiditySensor(tempThread);
-                temp.startProcess();
-
-            // calling the camera
-            } else if(choice.equals("Camera")) {
-                ca.callCamera();
-
-            // calling the buzzer
-            } else if(choice.equals("Buzzer")) {
-                Buzzer buzzer = new Buzzer(buzzerThread);
-                 System.out.println("Calling buzzer");
-                 buzzer.startProcess();
-            
-            // calling the Infrared Motion Sensor
-            } else if (choice.equals("Infrared")){
-                System.out.println("Calling Infrared Motion Sensor");
-                InfraredMotionSensor infrared = new InfraredMotionSensor(InfraredThread);
-                infrared.startProcess();
-
-            }else {
-                System.out.println("Invalid choice");
-            }
-        }
-        System.out.println("Exit");
+//        while(run) {
+//            System.out.println("Select choice (Close, Sensor, Camera, Buzzer, Infrared)");
+//            String choice = reader.nextLine();
+//            // closing the app
+//            if(choice.equals("Close")) {
+//                System.out.println("Setting run to false");
+//                run = false;
+//
+//            // calling the sensor
+//            } else if(choice.equals("Sensor")){
+//                System.out.println("Calling sensor");
+//                TemperatureHumiditySensor temp = new TemperatureHumiditySensor(tempThread);
+//                temp.startProcess();
+//
+//            // calling the camera
+//            } else if(choice.equals("Camera")) {
+//                ca.callCamera();
+//
+//            // calling the buzzer
+//            } else if(choice.equals("Buzzer")) {
+//                Buzzer buzzer = new Buzzer(buzzerThread);
+//                 System.out.println("Calling buzzer");
+//                 buzzer.startProcess();
+//            
+//            // calling the Infrared Motion Sensor
+//            } else if (choice.equals("Infrared")){
+//                System.out.println("Calling Infrared Motion Sensor");
+//                InfraredMotionSensor infrared = new InfraredMotionSensor(InfraredThread);
+//                infrared.startProcess();
+//
+//            }else {
+//                System.out.println("Invalid choice");
+//            }
+//        }
+//        System.out.println("Exit");
     }
 }

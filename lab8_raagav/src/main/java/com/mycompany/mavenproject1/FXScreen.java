@@ -1,32 +1,48 @@
 package com.mycompany.mavenproject1;
-
+import eu.hansolo.tilesfx.Tile;
+import eu.hansolo.tilesfx.Tile.SkinType;
 import eu.hansolo.tilesfx.TileBuilder;
-import eu.hansolo.tilesfx.Tile.*;
+import eu.hansolo.tilesfx.Tile.ImageMask;
+import eu.hansolo.tilesfx.Tile.TextSize;
+import eu.hansolo.tilesfx.tools.Helper;
+
 import java.io.IOException;
-import java.util.*;
-import java.util.logging.*;
+import java.util.ArrayList;
+import javafx.scene.image.Image;
+import java.util.Date;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.scene.layout.*;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.control.*;
-import eu.hansolo.tilesfx.*;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.FlowPane;
 
 /**
- * @author Raagav Prasanna
+ *
+ * @author Tuan Danh Huynh
  */
 
 /* Class to Create the GUI with the help of TilesFX library */
 public class FXScreen extends HBox {
 
-    
+    //Flag to monitor the threads
+    private static boolean running = true;
     private Tile gaugeTile;
     private Tile percentageTile;
-    private static boolean running = true;
-    
     //Constructor 
     public FXScreen() throws IOException {
-        this.startSensorThread();
-        
+        //Start the example thread
+        //this.TemperatureAndHimidityOutputThread();
         //Build the screen
         this.buildScreen();
     }
@@ -62,37 +78,27 @@ public class FXScreen extends HBox {
         tfContainer.add(textfield, 2, 4);
         tfContainer.add(clearButton, 1, 5);
         tfContainer.add(tfButton, 3, 5);
+        
+        //Setup the tile to contain the TextField
 
+        // gauge tile with temperature 
+        gaugeTile = TileBuilder.create()
+                .skinType(SkinType.GAUGE)
+                .prefSize(350, 300)
+                .title("Temperature")
+                .unit("℃")
+                .threshold(75)
+                .build();
 
-        // LAB: A clock tile showing the current date and time
+        // Tile with a clock
         var clockTile = TileBuilder.create()
                 .skinType(SkinType.CLOCK)
                 .prefSize(350, 300)
-                .title("Clock Tile")
+                .title("Current time")
                 .dateVisible(true)
                 .locale(locale)
                 .running(true)
                 .build();
-        
-        // LAB: A gauge tile to display temperature reading obtained from the DHT11 sensor
-        gaugeTile = TileBuilder.create()
-                       .skinType(SkinType.GAUGE)
-                       .prefSize(350, 300)
-                       .title("Gauge Tile")
-                       .unit("Degrees Celcius")
-                       .threshold(100)
-                       .build();
-        
-        
-        // LAB: A percentage tile to display humidity data obtained from the DHT11 sensor
-        percentageTile = TileBuilder.create()
-                        .skinType(SkinType.PERCENTAGE)
-                        .prefSize(350, 300)
-                        .title("Percentage Tile")
-                        .unit("%")
-                        .description("Humidity")
-                        .maxValue(100)
-                        .build();
 
         // Setup tile with update button to update output
         var updateButton = new Button("Update");
@@ -124,16 +130,14 @@ public class FXScreen extends HBox {
 
         /*Text tile to display output from external program */
         //The command to execute
-        String theCmd = "src/main/Python/helloWorld.py";
+//        String theCmd = "src/main/Python/helloWorld.py";
+//
+//        //ProcessBuilder object use to run the external command
+//        var theProcessBuilder = new TemperatureAndHumidityProcessBuilder(theCmd);
+//
+//        //Get the output from the process
+        String theOutput = "hhaha";
 
-        //ProcessBuilder object use to run the external command
-        var theProcessBuilder = new TemperatureAndHumidityProcessBuilder(theCmd);
-
-        //Get the output from the process
-        String theOutput = theProcessBuilder.startProcess();
-
-        //Generate a timestamp
-        var timeStamp2 = new Date();
 
         //Setup tile with TextArea to display output from external program
         TextArea textArea = new TextArea();
@@ -149,12 +153,12 @@ public class FXScreen extends HBox {
                 + "-fx-text-box-border: transparent;");
 
         //Write output to TextArea
-        textArea.setText("\n\nOutput from external program at" + "\n" + timeStamp2 + ":" + "\n" + theOutput);
+        textArea.setText("\n\nOutput from external program " + "\n" + theOutput);
 
         //Layout to contain the TextArea
         VBox textAreaVbox = new VBox(textArea);
 
-        // LAB: A TextArea tile to display output from the Hello World python program
+        //Setup the tile
         var textAreaTile = TileBuilder.create()
                 .skinType(SkinType.CUSTOM)
                 .prefSize(350, 300)
@@ -163,9 +167,16 @@ public class FXScreen extends HBox {
                 .graphic(textAreaVbox)
                 .build();
 
-        //Label for the choiceBox
-        Label cbLabel = new Label("Select your choice:  ");
-        cbLabel.setTextFill(Color.WHITE);
+
+        //set up the percentage Tile
+        percentageTile = TileBuilder.create()
+                .skinType(SkinType.PERCENTAGE)
+                .prefSize(350, 300)
+                .title("humidity Tile")
+                .unit("%")
+                //.unit(Helper.PERCENTAGE)
+                .maxValue(100)
+                .build();
 
         //Setup a tile with an exit button to end the application
         var exitButton = new Button("Exit");
@@ -184,24 +195,28 @@ public class FXScreen extends HBox {
                 .build();
 
         //Add the tiles to VBoxes
-        var tilesColumn1 = new VBox(clockTile, gaugeTile);
+        // display clock I and and IV A TextArea tile to display output from the Hello World python program
+        var tilesColumn1 = new VBox(clockTile, textAreaTile);
         tilesColumn1.setMinWidth(350);
         tilesColumn1.setSpacing(5);
-
-        var tilesColumn2 = new VBox(percentageTile, updateOutputTile);
+        // display temperature II and V A tile similar to that in the example code for updating the program’s output.
+        var tilesColumn2 = new VBox(gaugeTile, updateOutputTile);
         tilesColumn2.setMinWidth(350);
         tilesColumn2.setSpacing(5);
-
-        var tilesColumn3 = new VBox(textAreaTile, exitTile);
+        //display A Percentage tile to display humidity III and VI A tile with an Exit button to quit the application
+        var tilesColumn3 = new VBox(percentageTile, exitTile);
         tilesColumn3.setMinWidth(350);
         tilesColumn3.setSpacing(5);
 
         //Add the VBoxes to the root layout, which is a HBox
-        this.getChildren().addAll(tilesColumn1, tilesColumn2, tilesColumn3);
+        this.getChildren().add(tilesColumn1);
+        this.getChildren().add(tilesColumn2);
+        this.getChildren().add(tilesColumn3);
         this.setSpacing(5);
     }
 
-    private void startSensorThread() {
+    //Setup a thread  update temperature and himidity (threaded)
+private void TemperatureAndHimidityOutputThread() {
         Thread tempThread = new Thread(() -> {
            while(running) {
                try {
@@ -230,17 +245,12 @@ public class FXScreen extends HBox {
         
         tempThread.start();
     }
-    
-    
+
+
     //Stop the threads and close the application
     private void endApplication() {
-        FXScreen.running = false;
-        
+        this.running = false;
+
         Platform.exit();
-    }
-    
-    // Method to close application for unit test
-    public void close() {
-        endApplication();
     }
 }
