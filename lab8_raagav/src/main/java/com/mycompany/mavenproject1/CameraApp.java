@@ -3,6 +3,13 @@ package com.mycompany.mavenproject1;
 
 import com.pi4j.Pi4J;
 import com.pi4j.context.Context;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Optional;
 
 /**
  *
@@ -29,7 +36,7 @@ public class CameraApp implements IApplicationCamera{
         
         //Configure the camera setup
         var config = Camera.PicConfig.Builder.newInstance()
-                .outputPath("/home/raagav/Pictures/")
+                .outputPath("src/main/resources/media/Pics/")
 		.delay(3000)
 		.disablePreview(true)
 		.encoding(Camera.PicEncoding.PNG)
@@ -81,5 +88,31 @@ public class CameraApp implements IApplicationCamera{
         
         // Shutdown Pi4J
         pi4j.shutdown();
-    } 
+    }
+    
+    private File getRecentImage() {
+        File dir = new File("src/main/resources/media/Pics/");
+        if(dir.isDirectory()) {
+            Optional<File> opFile = Arrays.stream(dir.listFiles(File::isFile))
+                    .max((f1, f2) -> Long.compare(f1.lastModified() , f2.lastModified()));
+            
+            if(opFile.isPresent()) {
+                return opFile.get();
+            }
+        }
+        return null;
+    }
+    
+    public String getRecentImageBytes() throws FileNotFoundException, IOException {
+        File file = getRecentImage();
+        FileInputStream fis = new FileInputStream(file);
+        
+        byte[] arr = new byte[(int)file.length()];
+        fis.read(arr);
+        fis.close();
+        
+        String s = Base64.getEncoder().encodeToString(arr);
+        
+        return s;
+    }
 }

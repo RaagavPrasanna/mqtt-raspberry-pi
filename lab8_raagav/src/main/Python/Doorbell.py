@@ -7,8 +7,8 @@
 ########################################################################
 import RPi.GPIO as GPIO
 
-buzzerPin = 16    # define buzzerPin
-buttonPin = 12    # define buttonPin
+buzzerPin = 11    # define buzzerPin
+buttonPin = 40    # define buttonPin
 
 def setup():
     GPIO.setmode(GPIO.BOARD)        # use PHYSICAL GPIO Numbering

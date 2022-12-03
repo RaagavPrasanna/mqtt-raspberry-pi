@@ -12,9 +12,11 @@ import java.security.cert.Certificate;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
@@ -34,18 +36,27 @@ public class Keys {
     private String storePath;
     private String storeAlias;
     private KeyPair kp;
+    private String storePass;
     // Constructor that takes as input KeyStore password and file path.
     public Keys(String psswd, String filepath) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableKeyException{
         storePath = filepath;
+        storePass = psswd;
         ks = KeyStore.getInstance(new File(filepath), psswd.toCharArray());
         storeAlias = "mycompany";
-        kp = getKeyPair(psswd);
+        kp = getKeyPair();
         System.out.println("Successfully loaded KeyStore");
     }
     
-    private KeyPair getKeyPair(String psswd) throws NoSuchAlgorithmException, UnrecoverableKeyException, KeyStoreException {
-        Key key = ks.getKey(storeAlias, psswd.toCharArray());
+    private KeyPair getKeyPair() throws NoSuchAlgorithmException, UnrecoverableKeyException, KeyStoreException {
+        Key key = ks.getKey(storeAlias, storePass.toCharArray());
+//        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("DSA");
+//        keyPairGen.initialize(2048);
+//        KeyPair pair = keyPairGen.generateKeyPair();
+
+//        PrivateKey privKey = pair.getPrivate();
+//        PublicKey publicKey = pair.getPublic();
         
+        // Will throw an exception if the keystore does not contain this certificate
         Certificate cert = ks.getCertificate("mycompany");
         
         PublicKey pk = cert.getPublicKey();
@@ -53,6 +64,9 @@ public class Keys {
         return new KeyPair(pk, (PrivateKey)key);
     }
     
+    public PublicKey getPublicKey() {
+        return kp.getPublic();
+    }
     
     public void storeKeyInKeyStore(String keyAlias, String keyPsswd, String storePass) throws NoSuchAlgorithmException, KeyStoreException, IOException, CertificateException {
         KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
@@ -75,15 +89,23 @@ public class Keys {
         return sk;
     }
     
-    public String verifyAndReturnInput(String input) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException, UnsupportedEncodingException, KeyStoreException, UnrecoverableKeyException {
-        Signature sign = Signature.getInstance("SHA256withDSA");
+    public String verifyAndReturnInput(String input) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException, UnsupportedEncodingException, KeyStoreException, UnrecoverableKeyException, NoSuchProviderException {
+        Signature sign = Signature.getInstance("SHA256withECDSA", "SunEC");
         sign.initSign(kp.getPrivate());
         byte[] bytes = input.getBytes();
         sign.update(bytes);
         byte[] signature = sign.sign();
-        System.out.println("Digital signature for given text: "+new String(signature, "UTF8"));
-        
-        return new String(bytes, "UTF8");
+        sign.initVerify(kp.getPublic());
+        sign.update(bytes);
+        boolean isValid = sign.verify(signature);
+        if(isValid) {
+            System.out.println("Digital signature for given text: "+new String(signature, "UTF8"));
+            return new String(bytes, "UTF8");
+        } else {
+            System.out.println("Signature failed");
+            throw new IllegalArgumentException("Invalid input string!");
+        }
+         
     }
     
     private void storeKeyStore(String storePass) throws IOException, KeyStoreException, NoSuchAlgorithmException, CertificateException{

@@ -15,6 +15,8 @@ public class BuzzerProcessBuilder {
     //Stores the output from the process
     private String theOutput;
     
+    private String state;
+    
     private ProcessBuilder processBuilder;
     
    //The constructor to execute Python command takes a String
@@ -39,26 +41,36 @@ public class BuzzerProcessBuilder {
         }
     }
     
+    public String getState() {
+        return state;
+    }
+    
     
     //Start the process and get the output
     String startProcess() throws IOException {
        
         //Initialize theOutput to null String
         this.theOutput = "";
-        
         //Start the process
         var process = this.processBuilder.start();
-        
+//              System.out.println("reached here start process 4");
+
+
         try (var reader = new BufferedReader(
             new InputStreamReader(process.getInputStream()))) {
 
             String line;
 
+            System.out.println("reached here start process");
             while ((line = reader.readLine()) != null) {
-                this.theOutput = this.theOutput + line;
+                //this.theOutput = this.theOutput + line;
+                state = line;
             }
+//            System.out.println("reached here start process 2");
 
         }
+//                    System.out.println("reached here start proce 3");
+
         return this.theOutput;
     }
 }
