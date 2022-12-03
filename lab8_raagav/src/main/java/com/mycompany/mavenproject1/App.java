@@ -16,10 +16,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+//import javafx.application.Application;
+//import javafx.application.Platform;
+//import javafx.scene.Scene;
+//import javafx.stage.Stage;
 import java.util.Scanner;
 import com.hivemq.client.mqtt.mqtt5.exceptions.Mqtt5ConnAckException;
 import java.util.Date;
@@ -29,32 +29,33 @@ import java.text.SimpleDateFormat;
 /**
  * JavaFX App
  */
-public class App extends Application {
+public class App /*extends Application*/ {
     
     //Allows the stage be easily accessible
-    public static Stage theStage;
+//    public static Stage theStage;
     public static Thread tempThread;
     public static Thread buzzerThread;
     public static Thread InfraredThread;
-    @Override
-    public void start(Stage stage) throws IOException {
-        var scene = new Scene(new FXScreen(), 1400, 1200);
-        App.theStage = stage;
-        
-        //Set the active scene
-        theStage.setScene(scene);
-        theStage.show();
-        
-        // Make sure the application quits completely on close
-        theStage.setOnCloseRequest(t -> {
-            Platform.exit();
-            System.exit(0);
-        });
-    }
+//    @Override
+//    public void start(Stage stage) throws IOException {
+//        var scene = new Scene(new FXScreen(), 1400, 1200);
+//        App.theStage = stage;
+//        
+//        //Set the active scene
+//        theStage.setScene(scene);
+//        theStage.show();
+//        
+//        // Make sure the application quits completely on close
+//        theStage.setOnCloseRequest(t -> {
+//            Platform.exit();
+//            System.exit(0);
+//        });
+//    }
 
     public static void main(String[] args) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, InvalidKeyException, SignatureException {
         boolean run = true;
         Scanner reader = new Scanner(System.in);
+        CameraApp ca = new CameraApp();
         boolean invalidLogin = true; 
         String username = "";
         String password = "";
@@ -136,5 +137,6 @@ public class App extends Application {
 //                System.out.println("Invalid choice");
 //            }
         }
-        System.out.println("Exit");
+//        launch();
     }
+}
