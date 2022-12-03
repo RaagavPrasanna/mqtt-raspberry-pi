@@ -81,104 +81,100 @@ public class FXScreen extends HBox {
         
         //Setup the tile to contain the TextField
 
-        // gauge tile with temperature 
-        gaugeTile = TileBuilder.create()
-                .skinType(SkinType.GAUGE)
-                .prefSize(350, 300)
-                .title("Temperature")
-                .unit("℃")
-                .threshold(75)
-                .build();
 
-        // Tile with a clock
-        var clockTile = TileBuilder.create()
-                .skinType(SkinType.CLOCK)
-                .prefSize(350, 300)
-                .title("Current time")
-                .dateVisible(true)
-                .locale(locale)
-                .running(true)
-                .build();
-
-        // Setup tile with update button to update output
-        var updateButton = new Button("Update");
-        updateButton.setOnAction(e -> {
-            var updateDataObj = new UpdateData();
-            try {
-                updateDataObj.updateOutput();
-            } catch (IOException ex) {
-                Logger.getLogger(FXScreen.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
 
         // Generate a timestamp 
         var timeStamp = new Date();
 
-        //A custom tile containing update button and a timestamp
-        var updateOutputTile = TileBuilder.create()
-                .skinType(SkinType.CUSTOM)
-                .prefSize(350, 300)
-                .title("Update the output")
-                .textSize(TextSize.BIGGER)
-                .text("Last update date and time: " + timeStamp)
-                .textColor(Color.MIDNIGHTBLUE)
-                .backgroundColor(Color.LIGHTBLUE)
-                .titleColor(Color.BLUE)
-                .graphic(updateButton)
-                .roundedCorners(true)
-                .build();
+        
 
-        /*Text tile to display output from external program */
-        //The command to execute
-//        String theCmd = "src/main/Python/helloWorld.py";
-//
-//        //ProcessBuilder object use to run the external command
-//        var theProcessBuilder = new TemperatureAndHumidityProcessBuilder(theCmd);
-//
-//        //Get the output from the process
-        String theOutput = "hhaha";
 
 
         //Setup tile with TextArea to display output from external program
-        TextArea textArea = new TextArea();
-
+        TextArea textAreaForBuzzerAidan = new TextArea();
+        TextArea textAreaForBuzzerDanh = new TextArea();
+        TextArea textAreaForBuzzerRaagav = new TextArea();
+        TextArea textAreaForTemperatureAndHumidityDanh = new TextArea();
+        TextArea textAreaForTemperatureAndHumidityAidan= new TextArea();
+        TextArea textAreaForTemperatureAndHumidityRaagav = new TextArea();
+        TextArea textAreaForMotionDetectorDanh = new TextArea();
+        TextArea textAreaForMotionDetectorAidan = new TextArea();
+        TextArea textAreaForMotionDetectorRaagav = new TextArea();
+            
         //Make the TextArea non editable
-        textArea.setEditable(false);
-
+        textAreaForBuzzerDanh.setEditable(false);
+        textAreaForBuzzerAidan.setEditable(false);
+        textAreaForBuzzerRaagav.setEditable(false);
+        textAreaForTemperatureAndHumidityDanh.setEditable(false);
+        textAreaForTemperatureAndHumidityAidan.setEditable(false);
+        textAreaForTemperatureAndHumidityRaagav.setEditable(false);
+        textAreaForMotionDetectorDanh.setEditable(false);
+        textAreaForMotionDetectorAidan.setEditable(false);
+        textAreaForMotionDetectorRaagav.setEditable(false);
         /*Change the background and the font color of the TextArea
-           and make the border of the TextArea transparent
+           and make the border of the TextArea transparent for all Text Area
          */
-        textArea.setStyle("-fx-control-inner-background: #2A2A2A; "
+        textAreaForBuzzerDanh.setStyle("-fx-control-inner-background: #2A2A2A; "
                 + "-fx-text-inner-color: white;"
                 + "-fx-text-box-border: transparent;");
-
-        //Write output to TextArea
-        textArea.setText("\n\nOutput from external program " + "\n" + theOutput);
-
-        //Layout to contain the TextArea
-        VBox textAreaVbox = new VBox(textArea);
-
+        textAreaForBuzzerAidan.setStyle("-fx-control-inner-background: #2A2A2A; "
+                + "-fx-text-inner-color: white;"
+                + "-fx-text-box-border: transparent;");
+        textAreaForBuzzerRaagav.setStyle("-fx-control-inner-background: #2A2A2A; "
+                + "-fx-text-inner-color: white;"
+                + "-fx-text-box-border: transparent;");
+        textAreaForTemperatureAndHumidityDanh.setStyle("-fx-control-inner-background: #2A2A2A; "
+                + "-fx-text-inner-color: white;"
+                + "-fx-text-box-border: transparent;");
+        textAreaForTemperatureAndHumidityAidan.setStyle("-fx-control-inner-background: #2A2A2A; "
+                + "-fx-text-inner-color: white;"
+                + "-fx-text-box-border: transparent;");
+        textAreaForTemperatureAndHumidityRaagav.setStyle("-fx-control-inner-background: #2A2A2A; "
+                + "-fx-text-inner-color: white;"
+                + "-fx-text-box-border: transparent;");
+        textAreaForMotionDetectorAidan.setStyle("-fx-control-inner-background: #2A2A2A; "
+                + "-fx-text-inner-color: white;"
+                + "-fx-text-box-border: transparent;");
+        textAreaForMotionDetectorRaagav.setStyle("-fx-control-inner-background: #2A2A2A; "
+                + "-fx-text-inner-color: white;"
+                + "-fx-text-box-border: transparent;");
+        //Write output to TextArea TODO U CAN CHANGE THE TEXT AREA IN SET TEXT, SO UPDATE THE MESSAGE ALSO
+        textAreaForMotionDetectorDanh.setText("\n\nOutput from external program 1" + "\n");
+        textAreaForMotionDetectorRaagav.setText("EXAMPLE");
+        //Layout to contain the TextArea For ALL TILES
+        VBox textAreaForBuzzerDanhVbox = new VBox(textAreaForBuzzerDanh);
+        VBox textAreaForBuzzerAidanVbox = new VBox(textAreaForBuzzerAidan);
+        VBox textAreaForBuzzerRaagavVbox = new VBox(textAreaForBuzzerRaagav);
+        VBox textAreaForTemperatureAndHumidityDanhVbox = new VBox(textAreaForTemperatureAndHumidityDanh);
+        VBox textAreaForTemperatureAndHumidityAidanVbox = new VBox(textAreaForTemperatureAndHumidityAidan);
+        VBox textAreaForTemperatureAndHumidityRaagavVbox = new VBox(textAreaForTemperatureAndHumidityRaagav);
+        VBox textAreaForMotionDetectorDanhVBox = new VBox(textAreaForMotionDetectorDanh);
+        VBox textAreaForMotionDetectorAidanVBox = new VBox(textAreaForMotionDetectorAidan);
+        VBox textAreaForMotionDetectorRaagavVBox = new VBox(textAreaForMotionDetectorRaagav);       
+                                                                
+                                                        
+                                                        
         //Setup the tile for Buzzer
         var textAreaTileForBuzzerDanh = TileBuilder.create()
                 .skinType(SkinType.CUSTOM)
                 .prefSize(350, 300)
                 .textSize(TextSize.BIGGER)
                 .title("Buzzer Message Danh")
-                .graphic(textAreaVbox)
+                .graphic(textAreaForBuzzerDanhVbox)
                 .build();
         var textAreaTileForBuzzerAidan = TileBuilder.create()
                 .skinType(SkinType.CUSTOM)
                 .prefSize(350, 300)
                 .textSize(TextSize.BIGGER)
                 .title("Buzzer message Aidan")
-                .graphic(textAreaVbox)
+                .graphic(textAreaForBuzzerAidanVbox)
                 .build();
         var textAreaTileForBuzzerRaagav = TileBuilder.create()
                 .skinType(SkinType.CUSTOM)
                 .prefSize(350, 300)
                 .textSize(TextSize.BIGGER)
                 .title("Buzzer message Raagav")
-                .graphic(textAreaVbox)
+                .graphic(textAreaForBuzzerRaagavVbox)
                 .build();
         // Setup the Tile for Temperature and Humidity
         var textAreaTileForTemperatureAndHumidityDanh = TileBuilder.create()
@@ -186,43 +182,43 @@ public class FXScreen extends HBox {
                 .prefSize(350, 300)
                 .textSize(TextSize.BIGGER)
                 .title("Temperature and Humidity message Danh")
-                .graphic(textAreaVbox)
+                .graphic(textAreaForTemperatureAndHumidityDanhVbox)
                 .build();
         var textAreaTileForTemperatureAndHumidityAidan = TileBuilder.create()
                 .skinType(SkinType.CUSTOM)
                 .prefSize(350, 300)
                 .textSize(TextSize.BIGGER)
                 .title("Temperature and Humidity message Aidan")
-                .graphic(textAreaVbox)
+                .graphic(textAreaForTemperatureAndHumidityAidanVbox)
                 .build();
         var textAreaTileForTemperatureAndHumidityRaagav = TileBuilder.create()
                 .skinType(SkinType.CUSTOM)
                 .prefSize(350, 300)
                 .textSize(TextSize.BIGGER)
                 .title("Temperature and Humidity message Raagav")
-                .graphic(textAreaVbox)
+                .graphic(textAreaForTemperatureAndHumidityRaagavVbox)
                 .build();
         //set up the Tile for Motion Detector
-            var textAreaTileForTMotionDetectorDanh = TileBuilder.create()
+            var textAreaTileForMotionDetectorDanh = TileBuilder.create()
                 .skinType(SkinType.CUSTOM)
                 .prefSize(350, 300)
                 .textSize(TextSize.BIGGER)
                 .title("Motion Detector message Danh")
-                .graphic(textAreaVbox)
+                .graphic(textAreaForMotionDetectorDanhVBox)
                 .build();
-            var textAreaTileForTMotionDetectorAidan = TileBuilder.create()
+            var textAreaTileForMotionDetectorAidan = TileBuilder.create()
                 .skinType(SkinType.CUSTOM)
                 .prefSize(350, 300)
                 .textSize(TextSize.BIGGER)
                 .title("Motion Detector message Aidan")
-                .graphic(textAreaVbox)
+                .graphic(textAreaForMotionDetectorAidanVBox)
                 .build();
-            var textAreaTileForTMotionDetectorRaagav = TileBuilder.create()
+            var textAreaTileForMotionDetectorRaagav = TileBuilder.create()
                 .skinType(SkinType.CUSTOM)
                 .prefSize(350, 300)
                 .textSize(TextSize.BIGGER)
                 .title("Motion Detector message Raagav")
-                .graphic(textAreaVbox)
+                .graphic(textAreaForMotionDetectorRaagavVBox)
                 .build();
         //set up the Tile for Image
         
@@ -250,15 +246,15 @@ public class FXScreen extends HBox {
                 .build();
         //Add the tiles to VBoxes
         // display clock I and and IV A TextArea tile to display output from the Hello World python program
-        var tilesColumn1 = new VBox(textAreaTileForTemperatureAndHumidityDanh,ImageTileForCameraDanh, textAreaTileForBuzzerDanh, textAreaTileForTMotionDetectorDanh);
+        var tilesColumn1 = new VBox(textAreaTileForTemperatureAndHumidityDanh,ImageTileForCameraDanh, textAreaTileForBuzzerDanh, textAreaTileForMotionDetectorDanh);
         tilesColumn1.setMinWidth(350);
         tilesColumn1.setSpacing(5);
         // display temperature II and V A tile similar to that in the example code for updating the program’s output.
-        var tilesColumn2 = new VBox(textAreaTileForTemperatureAndHumidityAidan,ImageTileForCameraAidan,textAreaTileForBuzzerAidan,textAreaTileForTMotionDetectorAidan);
+        var tilesColumn2 = new VBox(textAreaTileForTemperatureAndHumidityAidan,ImageTileForCameraAidan,textAreaTileForBuzzerAidan,textAreaTileForMotionDetectorAidan);
         tilesColumn2.setMinWidth(350);
         tilesColumn2.setSpacing(5);
         //display A Percentage tile to display humidity III and VI A tile with an Exit button to quit the application
-        var tilesColumn3 = new VBox(textAreaTileForTemperatureAndHumidityRaagav,ImageTileForCameraRaagav,textAreaTileForBuzzerRaagav, textAreaTileForTMotionDetectorRaagav);
+        var tilesColumn3 = new VBox(textAreaTileForTemperatureAndHumidityRaagav,ImageTileForCameraRaagav,textAreaTileForBuzzerRaagav, textAreaTileForMotionDetectorRaagav);
         tilesColumn3.setMinWidth(350);
         tilesColumn3.setSpacing(5);
 
