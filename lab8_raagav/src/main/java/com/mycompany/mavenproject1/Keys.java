@@ -16,6 +16,7 @@ import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
@@ -35,9 +36,11 @@ public class Keys {
     private String storePath;
     private String storeAlias;
     private KeyPair kp;
+    private String storePass;
     // Constructor that takes as input KeyStore password and file path.
     public Keys(String psswd, String filepath) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableKeyException{
         storePath = filepath;
+        storePass = psswd;
         ks = KeyStore.getInstance(new File(filepath), psswd.toCharArray());
         storeAlias = "mycompany";
         kp = getKeyPair();
@@ -45,20 +48,20 @@ public class Keys {
     }
     
     private KeyPair getKeyPair() throws NoSuchAlgorithmException, UnrecoverableKeyException, KeyStoreException {
-        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("DSA");
-        keyPairGen.initialize(2048);
-        KeyPair pair = keyPairGen.generateKeyPair();
-        // Wanted to use the KeyStores Private Key but an error was being thrown upon the time of signature
-        PrivateKey privKey = pair.getPrivate();
-        PublicKey publicKey = pair.getPublic();
+        Key key = ks.getKey(storeAlias, storePass.toCharArray());
+//        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("DSA");
+//        keyPairGen.initialize(2048);
+//        KeyPair pair = keyPairGen.generateKeyPair();
+
+//        PrivateKey privKey = pair.getPrivate();
+//        PublicKey publicKey = pair.getPublic();
         
         // Will throw an exception if the keystore does not contain this certificate
         Certificate cert = ks.getCertificate("mycompany");
         
         PublicKey pk = cert.getPublicKey();
         
-        // Wanted to use the certificates public key but it was throwing an error upon the verification of the signature
-        return new KeyPair(publicKey, privKey);
+        return new KeyPair(pk, (PrivateKey)key);
     }
     
     public PublicKey getPublicKey() {
@@ -86,8 +89,8 @@ public class Keys {
         return sk;
     }
     
-    public String verifyAndReturnInput(String input) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException, UnsupportedEncodingException, KeyStoreException, UnrecoverableKeyException {
-        Signature sign = Signature.getInstance("SHA256withDSA");
+    public String verifyAndReturnInput(String input) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException, UnsupportedEncodingException, KeyStoreException, UnrecoverableKeyException, NoSuchProviderException {
+        Signature sign = Signature.getInstance("SHA256withECDSA", "SunEC");
         sign.initSign(kp.getPrivate());
         byte[] bytes = input.getBytes();
         sign.update(bytes);

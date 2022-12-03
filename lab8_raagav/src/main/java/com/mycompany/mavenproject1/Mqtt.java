@@ -14,6 +14,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.security.InvalidKeyException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.SignatureException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
@@ -109,11 +110,41 @@ public class Mqtt {
                 .topicFilter("KeyDanhHuynh")
                 .send();
         
+        
+        client.subscribeWith()
+                .topicFilter("TemperatureTakenRaagavPrasanna")
+                .send();
+        
+        client.subscribeWith()
+                .topicFilter("TemperatureTakenAidanCatriel")
+                .send();
+                
+        client.subscribeWith()
+                .topicFilter("TemperatureTakenDanhHuynh")
+                .send();
+        
+        
+        client.subscribeWith()
+                .topicFilter("TemperatureDataRaagavPrasanna")
+                .send();
+        
+        client.subscribeWith()
+                .topicFilter("TemperatureDataAidanCatriel")
+                .send();
+                
+        client.subscribeWith()
+                .topicFilter("TemperatureDataDanhHuynh")
+                .send();
+        
         // set a callback that is called when a message is received (using the async API style)
         client.toAsync().publishes(ALL, publish -> {
             String payload = "";
             try {
                 payload = k.verifyAndReturnInput(UTF_8.decode(publish.getPayload().get()).toString());
+                
+                System.out.println("Received message: "
+                    + publish.getTopic() + " -> "
+                    + payload);
             } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(Mqtt.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InvalidKeyException ex) {
@@ -126,12 +157,10 @@ public class Mqtt {
                 Logger.getLogger(Mqtt.class.getName()).log(Level.SEVERE, null, ex);
             } catch (UnrecoverableKeyException ex) {
                 Logger.getLogger(Mqtt.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchProviderException ex) {
+                Logger.getLogger(Mqtt.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            System.out.println("Received message: "
-                    + publish.getTopic() + " -> "
-                    + payload);
-
             // disconnect the client after a message was received
             //client.disconnect();
         });
@@ -173,6 +202,20 @@ public class Mqtt {
                 .topic("Key"+username)
                 .payload(UTF_8.encode(strKey))
                 .send(); 
+    }
+    
+    public void sendTemperatureTakenMessage(String msg) {
+        client.publishWith()
+                .topic("TemperatureTaken"+username)
+                .payload(UTF_8.encode(msg))
+                .send();
+    }
+    
+    public void sendTemperatureDataMessage(String msg) {
+        client.publishWith()
+                .topic("TemperatureData"+username)
+                .payload(UTF_8.encode(msg))
+                .send();
     }
     
     

@@ -78,22 +78,38 @@ public class App extends Application {
             }
         }
  
+        Buzzer buzzer = new Buzzer(buzzerThread);
+        buzzer.startProcess();
+        
+        TemperatureHumiditySensor temp = new TemperatureHumiditySensor(tempThread);
+        temp.startProcess();
+        
+        String choice = "";
+        String currentTemp = "0";
+        String currentHumid = "0";
         
 
         while(run) {
-            System.out.println("Select choice (Close, Sensor, Camera, Buzzer, Infrared, Key)");
-            String choice = reader.nextLine();
+//            System.out.println("Select choice (Close, Sensor, Camera, Buzzer, Infrared, Key)");
+
+            choice = reader.nextLine();
+      
             // closing the app
             if(choice.equals("Close")) {
                 System.out.println("Setting run to false");
                 run = false;
 
             // calling the sensor
-            } else if(choice.equals("Sensor")){
+            } else if(!currentTemp.equals(temp.getTempState()) || !currentHumid.equals(temp.getHumidState())){
                 System.out.println("Calling sensor");
-                TemperatureHumiditySensor temp = new TemperatureHumiditySensor(tempThread);
-                temp.startProcess();
-
+                
+                currentTemp = temp.getTempState();
+                currentHumid = temp.getHumidState();
+                
+                Timestamp ts = new Timestamp(System.currentTimeMillis());
+                m.sendTemperatureTakenMessage("Temperature and Humidity Data taken at: " +sdf.format(ts));
+                m.sendTemperatureDataMessage(currentTemp +"," +currentHumid);
+                
             // calling the camera
             } else if(choice.equals("Camera")) {
                 ca.callCamera();
@@ -103,10 +119,7 @@ public class App extends Application {
                 m.sendCameraTakenMessage("Picture taken at: " +sdf.format(ts));
                 m.sendCameraPictureMessage(imgData);
             // calling the buzzer
-            } else if(choice.equals("Buzzer")) {
-                Buzzer buzzer = new Buzzer(buzzerThread);
-                 System.out.println("Calling buzzer");
-                 buzzer.startProcess();
+            } else if(buzzer.getBuzzer().getState().equals("buzzer turned on >>>")) {
                  
                  Timestamp ts = new Timestamp(System.currentTimeMillis());
                  
@@ -120,9 +133,9 @@ public class App extends Application {
             } else if(choice.equals("Key")) {
                 m.sendPublicKey();
             } 
-            else {
-                System.out.println("Invalid choice");
-            }
+//            else {
+//                System.out.println("Invalid choice");
+//            }
         }
         System.out.println("Exit");
     }
