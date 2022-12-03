@@ -5,7 +5,7 @@ import eu.hansolo.tilesfx.TileBuilder;
 import eu.hansolo.tilesfx.Tile.ImageMask;
 import eu.hansolo.tilesfx.Tile.TextSize;
 import eu.hansolo.tilesfx.tools.Helper;
-
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.scene.image.Image;
@@ -207,14 +207,14 @@ public class FXScreen extends HBox {
                 .skinType(SkinType.CUSTOM)
                 .prefSize(350, 300)
                 .textSize(TextSize.BIGGER)
-                .title("Motion Detector message Raagav")
+                .title("Motion Detector message Danh")
                 .graphic(textAreaVbox)
                 .build();
             var textAreaTileForTMotionDetectorAidan = TileBuilder.create()
                 .skinType(SkinType.CUSTOM)
                 .prefSize(350, 300)
                 .textSize(TextSize.BIGGER)
-                .title("Motion Detector message Raagav")
+                .title("Motion Detector message Aidan")
                 .graphic(textAreaVbox)
                 .build();
             var textAreaTileForTMotionDetectorRaagav = TileBuilder.create()
@@ -224,19 +224,39 @@ public class FXScreen extends HBox {
                 .title("Motion Detector message Raagav")
                 .graphic(textAreaVbox)
                 .build();
-                                
-
+        //set up the Tile for Image
+        
+        
+        var ImageTileForCameraDanh = TileBuilder.create()
+                .skinType(SkinType.IMAGE)
+                .prefSize(350, 300)
+                // TODO missing image URL
+                .image(new Image(FXScreen.class.getResourceAsStream("src/main/java/com/mycompany/mavenproject1/stupid.png")))
+                .title("Danh Image Camera")
+                .build();
+        var ImageTileForCameraAidan = TileBuilder.create()
+                .skinType(SkinType.IMAGE)
+                .prefSize(350, 300)
+                // TODO missing image URL
+                .title("Aidan Image Camera")
+                .build();
+        var ImageTileForCameraRaagav = TileBuilder.create()
+                .skinType(SkinType.IMAGE)
+                .prefSize(350, 300)
+                // TODO missing image URL
+                .title("Raagav Image Camera")
+                .build();
         //Add the tiles to VBoxes
         // display clock I and and IV A TextArea tile to display output from the Hello World python program
-        var tilesColumn1 = new VBox(textAreaTileForTemperatureAndHumidityDanh, textAreaTileForBuzzerDanh, textAreaTileForTMotionDetectorDanh);
+        var tilesColumn1 = new VBox(textAreaTileForTemperatureAndHumidityDanh,ImageTileForCameraDanh, textAreaTileForBuzzerDanh, textAreaTileForTMotionDetectorDanh);
         tilesColumn1.setMinWidth(350);
         tilesColumn1.setSpacing(5);
         // display temperature II and V A tile similar to that in the example code for updating the program’s output.
-        var tilesColumn2 = new VBox(textAreaTileForTemperatureAndHumidityAidan,textAreaTileForBuzzerAidan,textAreaTileForTMotionDetectorAidan);
+        var tilesColumn2 = new VBox(textAreaTileForTemperatureAndHumidityAidan,ImageTileForCameraAidan,textAreaTileForBuzzerAidan,textAreaTileForTMotionDetectorAidan);
         tilesColumn2.setMinWidth(350);
         tilesColumn2.setSpacing(5);
         //display A Percentage tile to display humidity III and VI A tile with an Exit button to quit the application
-        var tilesColumn3 = new VBox(textAreaTileForTemperatureAndHumidityRaagav,textAreaTileForBuzzerRaagav, textAreaTileForTMotionDetectorRaagav);
+        var tilesColumn3 = new VBox(textAreaTileForTemperatureAndHumidityRaagav,ImageTileForCameraRaagav,textAreaTileForBuzzerRaagav, textAreaTileForTMotionDetectorRaagav);
         tilesColumn3.setMinWidth(350);
         tilesColumn3.setSpacing(5);
 

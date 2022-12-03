@@ -35,7 +35,7 @@ public class App extends Application {
     public static Thread InfraredThread;
     @Override
     public void start(Stage stage) throws IOException {
-        var scene = new Scene(new FXScreen(), 1060, 910);
+        var scene = new Scene(new FXScreen(), 1400, 1200);
         App.theStage = stage;
         
         //Set the active scene
