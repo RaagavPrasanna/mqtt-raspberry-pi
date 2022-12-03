@@ -158,53 +158,85 @@ public class FXScreen extends HBox {
         //Layout to contain the TextArea
         VBox textAreaVbox = new VBox(textArea);
 
-        //Setup the tile
-        var textAreaTile = TileBuilder.create()
+        //Setup the tile for Buzzer
+        var textAreaTileForBuzzerDanh = TileBuilder.create()
                 .skinType(SkinType.CUSTOM)
                 .prefSize(350, 300)
                 .textSize(TextSize.BIGGER)
-                .title("Output from external program to TextArea tile")
+                .title("Buzzer Message Danh")
                 .graphic(textAreaVbox)
                 .build();
-
-
-        //set up the percentage Tile
-        percentageTile = TileBuilder.create()
-                .skinType(SkinType.PERCENTAGE)
-                .prefSize(350, 300)
-                .title("humidity Tile")
-                .unit("%")
-                //.unit(Helper.PERCENTAGE)
-                .maxValue(100)
-                .build();
-
-        //Setup a tile with an exit button to end the application
-        var exitButton = new Button("Exit");
-
-        //Setup event handler for the exit button
-        exitButton.setOnAction(e -> endApplication());
-
-        //Setup the tile
-        var exitTile = TileBuilder.create()
+        var textAreaTileForBuzzerAidan = TileBuilder.create()
                 .skinType(SkinType.CUSTOM)
                 .prefSize(350, 300)
                 .textSize(TextSize.BIGGER)
-                .title("Quit the application")
-                .graphic(exitButton)
-                .roundedCorners(false)
+                .title("Buzzer message Aidan")
+                .graphic(textAreaVbox)
                 .build();
+        var textAreaTileForBuzzerRaagav = TileBuilder.create()
+                .skinType(SkinType.CUSTOM)
+                .prefSize(350, 300)
+                .textSize(TextSize.BIGGER)
+                .title("Buzzer message Raagav")
+                .graphic(textAreaVbox)
+                .build();
+        // Setup the Tile for Temperature and Humidity
+        var textAreaTileForTemperatureAndHumidityDanh = TileBuilder.create()
+                .skinType(SkinType.CUSTOM)
+                .prefSize(350, 300)
+                .textSize(TextSize.BIGGER)
+                .title("Temperature and Humidity message Danh")
+                .graphic(textAreaVbox)
+                .build();
+        var textAreaTileForTemperatureAndHumidityAidan = TileBuilder.create()
+                .skinType(SkinType.CUSTOM)
+                .prefSize(350, 300)
+                .textSize(TextSize.BIGGER)
+                .title("Temperature and Humidity message Aidan")
+                .graphic(textAreaVbox)
+                .build();
+        var textAreaTileForTemperatureAndHumidityRaagav = TileBuilder.create()
+                .skinType(SkinType.CUSTOM)
+                .prefSize(350, 300)
+                .textSize(TextSize.BIGGER)
+                .title("Temperature and Humidity message Raagav")
+                .graphic(textAreaVbox)
+                .build();
+        //set up the Tile for Motion Detector
+            var textAreaTileForTMotionDetectorDanh = TileBuilder.create()
+                .skinType(SkinType.CUSTOM)
+                .prefSize(350, 300)
+                .textSize(TextSize.BIGGER)
+                .title("Motion Detector message Raagav")
+                .graphic(textAreaVbox)
+                .build();
+            var textAreaTileForTMotionDetectorAidan = TileBuilder.create()
+                .skinType(SkinType.CUSTOM)
+                .prefSize(350, 300)
+                .textSize(TextSize.BIGGER)
+                .title("Motion Detector message Raagav")
+                .graphic(textAreaVbox)
+                .build();
+            var textAreaTileForTMotionDetectorRaagav = TileBuilder.create()
+                .skinType(SkinType.CUSTOM)
+                .prefSize(350, 300)
+                .textSize(TextSize.BIGGER)
+                .title("Motion Detector message Raagav")
+                .graphic(textAreaVbox)
+                .build();
+                                
 
         //Add the tiles to VBoxes
         // display clock I and and IV A TextArea tile to display output from the Hello World python program
-        var tilesColumn1 = new VBox(clockTile, textAreaTile);
+        var tilesColumn1 = new VBox(textAreaTileForTemperatureAndHumidityDanh, textAreaTileForBuzzerDanh, textAreaTileForTMotionDetectorDanh);
         tilesColumn1.setMinWidth(350);
         tilesColumn1.setSpacing(5);
         // display temperature II and V A tile similar to that in the example code for updating the program’s output.
-        var tilesColumn2 = new VBox(gaugeTile, updateOutputTile);
+        var tilesColumn2 = new VBox(textAreaTileForTemperatureAndHumidityAidan,textAreaTileForBuzzerAidan,textAreaTileForTMotionDetectorAidan);
         tilesColumn2.setMinWidth(350);
         tilesColumn2.setSpacing(5);
         //display A Percentage tile to display humidity III and VI A tile with an Exit button to quit the application
-        var tilesColumn3 = new VBox(percentageTile, exitTile);
+        var tilesColumn3 = new VBox(textAreaTileForTemperatureAndHumidityRaagav,textAreaTileForBuzzerRaagav, textAreaTileForTMotionDetectorRaagav);
         tilesColumn3.setMinWidth(350);
         tilesColumn3.setSpacing(5);
 
