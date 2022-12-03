@@ -12,6 +12,7 @@ import java.security.cert.Certificate;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -39,20 +40,30 @@ public class Keys {
         storePath = filepath;
         ks = KeyStore.getInstance(new File(filepath), psswd.toCharArray());
         storeAlias = "mycompany";
-        kp = getKeyPair(psswd);
+        kp = getKeyPair();
         System.out.println("Successfully loaded KeyStore");
     }
     
-    private KeyPair getKeyPair(String psswd) throws NoSuchAlgorithmException, UnrecoverableKeyException, KeyStoreException {
-        Key key = ks.getKey(storeAlias, psswd.toCharArray());
+    private KeyPair getKeyPair() throws NoSuchAlgorithmException, UnrecoverableKeyException, KeyStoreException {
+        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("DSA");
+        keyPairGen.initialize(2048);
+        KeyPair pair = keyPairGen.generateKeyPair();
+        // Wanted to use the KeyStores Private Key but an error was being thrown upon the time of signature
+        PrivateKey privKey = pair.getPrivate();
+        PublicKey publicKey = pair.getPublic();
         
+        // Will throw an exception if the keystore does not contain this certificate
         Certificate cert = ks.getCertificate("mycompany");
         
         PublicKey pk = cert.getPublicKey();
         
-        return new KeyPair(pk, (PrivateKey)key);
+        // Wanted to use the certificates public key but it was throwing an error upon the verification of the signature
+        return new KeyPair(publicKey, privKey);
     }
     
+    public PublicKey getPublicKey() {
+        return kp.getPublic();
+    }
     
     public void storeKeyInKeyStore(String keyAlias, String keyPsswd, String storePass) throws NoSuchAlgorithmException, KeyStoreException, IOException, CertificateException {
         KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
@@ -81,9 +92,17 @@ public class Keys {
         byte[] bytes = input.getBytes();
         sign.update(bytes);
         byte[] signature = sign.sign();
-        System.out.println("Digital signature for given text: "+new String(signature, "UTF8"));
-        
-        return new String(bytes, "UTF8");
+        sign.initVerify(kp.getPublic());
+        sign.update(bytes);
+        boolean isValid = sign.verify(signature);
+        if(isValid) {
+            System.out.println("Digital signature for given text: "+new String(signature, "UTF8"));
+            return new String(bytes, "UTF8");
+        } else {
+            System.out.println("Signature failed");
+            throw new IllegalArgumentException("Invalid input string!");
+        }
+         
     }
     
     private void storeKeyStore(String storePass) throws IOException, KeyStoreException, NoSuchAlgorithmException, CertificateException{

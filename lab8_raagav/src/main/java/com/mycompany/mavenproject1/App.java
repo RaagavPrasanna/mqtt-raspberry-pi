@@ -71,7 +71,7 @@ public class App extends Application {
                 System.out.println("Enter password");
                 password = reader.nextLine();
                 
-                m = new Mqtt(username,password);
+                m = new Mqtt(username,password, "src/main/resources/ProjectKeystore/ECcertif.ks", "keystore123");
                 invalidLogin = false;
             } catch(Mqtt5ConnAckException me) {
                 System.out.println("Invalid username or password");
@@ -81,7 +81,7 @@ public class App extends Application {
         
 
         while(run) {
-            System.out.println("Select choice (Close, Sensor, Camera, Buzzer, Infrared)");
+            System.out.println("Select choice (Close, Sensor, Camera, Buzzer, Infrared, Key)");
             String choice = reader.nextLine();
             // closing the app
             if(choice.equals("Close")) {
@@ -117,7 +117,10 @@ public class App extends Application {
                 InfraredMotionSensor infrared = new InfraredMotionSensor(InfraredThread);
                 infrared.startProcess();
 
-            }else {
+            } else if(choice.equals("Key")) {
+                m.sendPublicKey();
+            } 
+            else {
                 System.out.println("Invalid choice");
             }
         }

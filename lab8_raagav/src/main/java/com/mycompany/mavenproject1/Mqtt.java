@@ -8,7 +8,18 @@ import com.hivemq.client.mqtt.MqttClient;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5BlockingClient;
 
 import static com.hivemq.client.mqtt.MqttGlobalPublishFilter.ALL;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import java.security.InvalidKeyException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,11 +30,14 @@ public class Mqtt {
     private final Mqtt5BlockingClient client;
     private String username;
     
+    Keys k;
     
-    public Mqtt(String username, String password) {
+    
+    public Mqtt(String username, String password, String keyStoreFilePath, String keyStorePassword) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableKeyException{
         final String host = "c00c5690cfd54ad69a89f60fef3b5be1.s2.eu.hivemq.cloud";
         this.username = username;
         
+        k = new Keys(keyStorePassword, keyStoreFilePath);
         
         // create an MQTT client
         client = MqttClient.builder()
@@ -83,11 +97,40 @@ public class Mqtt {
                 .topicFilter("CameraPictureDanhHuynh")
                 .send();
         
+        client.subscribeWith()
+                .topicFilter("KeyRaagavPrasanna")
+                .send();
+        
+        client.subscribeWith()
+                .topicFilter("KeyAidanCatriel")
+                .send();
+                
+        client.subscribeWith()
+                .topicFilter("KeyDanhHuynh")
+                .send();
+        
         // set a callback that is called when a message is received (using the async API style)
         client.toAsync().publishes(ALL, publish -> {
+            String payload = "";
+            try {
+                payload = k.verifyAndReturnInput(UTF_8.decode(publish.getPayload().get()).toString());
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(Mqtt.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvalidKeyException ex) {
+                Logger.getLogger(Mqtt.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SignatureException ex) {
+                Logger.getLogger(Mqtt.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(Mqtt.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(Mqtt.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(Mqtt.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             System.out.println("Received message: "
                     + publish.getTopic() + " -> "
-                    + UTF_8.decode(publish.getPayload().get()));
+                    + payload);
 
             // disconnect the client after a message was received
             //client.disconnect();
@@ -118,6 +161,17 @@ public class Mqtt {
         client.publishWith()
                 .topic("CameraPicture"+username)
                 .payload(UTF_8.encode(msg))
+                .send(); 
+    }
+    
+    public void sendPublicKey() {
+        
+        byte[] byteKey = k.getPublicKey().getEncoded();
+        String strKey = Base64.getEncoder().encodeToString(byteKey);
+        
+        client.publishWith()
+                .topic("Key"+username)
+                .payload(UTF_8.encode(strKey))
                 .send(); 
     }
     
