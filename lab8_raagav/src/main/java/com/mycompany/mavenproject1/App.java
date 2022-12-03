@@ -38,7 +38,7 @@ public class App extends Application {
     public static Thread InfraredThread;
     @Override
     public void start(Stage stage) throws IOException {
-        var scene = new Scene(new FXScreen(), 1060, 910);
+        var scene = new Scene(new FXScreen(), 1400, 1200);
         App.theStage = stage;
         
         //Set the active scene
@@ -55,7 +55,6 @@ public class App extends Application {
     public static void main(String[] args) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, InvalidKeyException, SignatureException {
         boolean run = true;
         Scanner reader = new Scanner(System.in);
-        CameraApp ca = new CameraApp();
         boolean invalidLogin = true; 
         String username = "";
         String password = "";
@@ -139,4 +138,3 @@ public class App extends Application {
         }
         System.out.println("Exit");
     }
-}
