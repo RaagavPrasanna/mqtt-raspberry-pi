@@ -231,19 +231,21 @@ public class FXScreen extends HBox {
                 .skinType(SkinType.IMAGE)
                 .prefSize(350, 300)
                 // TODO missing image URL
-                .image(new Image(FXScreen.class.getResourceAsStream("src/main/java/com/mycompany/mavenproject1/stupid.png")))
+                .image(new Image(FXScreen.class.getResourceAsStream("sunny-clip-art.png")))
                 .title("Danh Image Camera")
                 .build();
         var ImageTileForCameraAidan = TileBuilder.create()
                 .skinType(SkinType.IMAGE)
                 .prefSize(350, 300)
                 // TODO missing image URL
+//                .image()
                 .title("Aidan Image Camera")
                 .build();
         var ImageTileForCameraRaagav = TileBuilder.create()
                 .skinType(SkinType.IMAGE)
                 .prefSize(350, 300)
                 // TODO missing image URL
+//               .image()
                 .title("Raagav Image Camera")
                 .build();
         //Add the tiles to VBoxes
