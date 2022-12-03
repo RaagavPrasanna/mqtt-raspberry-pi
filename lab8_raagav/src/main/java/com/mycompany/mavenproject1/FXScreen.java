@@ -3,6 +3,9 @@ package com.mycompany.mavenproject1;
 import eu.hansolo.tilesfx.TileBuilder;
 import eu.hansolo.tilesfx.Tile.*;
 import java.io.IOException;
+import java.security.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.*;
 import java.util.logging.*;
 import javafx.application.Platform;
@@ -22,7 +25,7 @@ public class FXScreen extends HBox {
     private Tile gaugeTile;
     private Tile percentageTile;
     private static boolean running = true;
-    
+    private Tile messageBuzzerTile;
     //Constructor 
     public FXScreen() throws IOException {
         this.startSensorThread();
@@ -95,6 +98,17 @@ public class FXScreen extends HBox {
                         .description("Humidity")
                         .maxValue(100)
                         .build();
+
+                        
+        messageBuzzerTile = TileBuilder.create()
+        .skinType(SkinType.TEXT)
+        .prefSize(350, 300)
+        .title("Danh Message Buzzer Tile")
+        .text("Whatever text")
+        .description("May the force be with you\n...always")
+        .descriptionAlignment(Pos.TOP_LEFT)
+        .textVisible(true)
+        .build();
 
         // Setup tile with update button to update output
         var updateButton = new Button("Update");
@@ -185,16 +199,47 @@ public class FXScreen extends HBox {
                 .roundedCorners(false)
                 .build();
 
+        var textTileForOutput1 = TileBuilder.create()
+        .skinType(SkinType.TEXT)
+        .prefSize(350, 300)
+        .textSize(TextSize.BIGGER)
+        .title("Raagav Message")
+        .description("Output from external program at 1")
+        .descriptionAlignment(Pos.CENTER_LEFT)
+        .textVisible(true)
+        .build();
+
+      var textTileForOutput2 = TileBuilder.create()
+                .skinType(SkinType.TEXT)
+                .prefSize(350, 300)
+                .textSize(TextSize.BIGGER)
+                .title("Aidan Message")
+                .description("Output from external program at 2")
+                .descriptionAlignment(Pos.CENTER_LEFT)
+                .textVisible(true)
+                .build();
+
+      var textTileForOutput3 = TileBuilder.create()
+                .skinType(SkinType.TEXT)
+                .prefSize(350, 300)
+                .textSize(TextSize.BIGGER)
+                .title("Danh Message")
+                .description("Output from external program at 3")
+                .descriptionAlignment(Pos.CENTER_LEFT)
+                .textVisible(true)
+                .build();
+
+
         //Add the tiles to VBoxes
-        var tilesColumn1 = new VBox(clockTile, gaugeTile);
+        var tilesColumn1 = new VBox(clockTile, gaugeTile,textTileForOutput1);
         tilesColumn1.setMinWidth(350);
         tilesColumn1.setSpacing(5);
 
-        var tilesColumn2 = new VBox(percentageTile, updateOutputTile);
+        var tilesColumn2 = new VBox(percentageTile, updateOutputTile,textTileForOutput3);
         tilesColumn2.setMinWidth(350);
         tilesColumn2.setSpacing(5);
 
-        var tilesColumn3 = new VBox(textAreaTile, exitTile);
+        var tilesColumn3 = new VBox(textAreaTile, exitTile, textTileForOutput3);
         tilesColumn3.setMinWidth(350);
         tilesColumn3.setSpacing(5);
 
@@ -249,6 +294,11 @@ public class FXScreen extends HBox {
                     String tempOutput;
                     try {
                         tempOutput = pbdht11.startProcess();
+                        // GET THE TIMESTAMP OF THE SENSOR (HAVEN"T TEST YET)
+                        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+                        // MISSING ADD THE MESSAGE TIME STAMP TO THE PAYLOAD
+
+                        
                         gaugeTile.setValue(Double.parseDouble(tempOutput.split(" ")[1]));
                         percentageTile.setValue(Double.parseDouble(tempOutput.split(" ")[0]));
                         
