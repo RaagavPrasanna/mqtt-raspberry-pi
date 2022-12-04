@@ -8,6 +8,7 @@ import com.hivemq.client.mqtt.MqttClient;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5BlockingClient;
 
 import static com.hivemq.client.mqtt.MqttGlobalPublishFilter.ALL;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -21,6 +22,7 @@ import java.security.cert.CertificateException;
 import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -141,6 +143,76 @@ public class Mqtt {
             String payload = "";
             try {
                 payload = k.verifyAndReturnInput(UTF_8.decode(publish.getPayload().get()).toString());
+                
+                if(publish.getTopic().toString().equals("BuzzerRaagavPrasanna")) {
+                    App.screen.textAreaForBuzzerRaagav.setText(payload);
+                } else if(publish.getTopic().toString().equals("CameraTakenRaagavPrasanna")) {
+                    App.screen.textAreaForMotionDetectorRaagav.setText(payload);
+                } else if(publish.getTopic().toString().equals("TemperatureDataRaagavPrasanna")) {
+                    String[] splitData = payload.split(",");
+                    
+                    String data = "Temperature: " + splitData[0] +" Humidity: " +splitData[1];
+                    
+                    App.screen.textAreaForTemperatureAndHumidityRaagav.setText(data);
+                } else if(publish.getTopic().toString().equals("CameraPictureRaagavPrasanna")) {
+                    System.out.println("Entered topic");
+                    
+                    
+                    byte[] decodedBytes = Base64.getDecoder().decode(payload);
+
+                    ByteArrayInputStream bais = new ByteArrayInputStream(decodedBytes);
+                    
+                    Image image = new Image(bais);
+                    
+                    App.screen.ImageTileForCameraRaagav.setImage(image);
+                }
+                
+                else if(publish.getTopic().toString().equals("BuzzerAidanCatriel")) {
+                    App.screen.textAreaForBuzzerAidan.setText(payload);
+                } else if(publish.getTopic().toString().equals("CameraTakenAidanCatriel")) {
+                    App.screen.textAreaForMotionDetectorAidan.setText(payload);
+                } else if(publish.getTopic().toString().equals("TemperatureDataAidanCatriel")) {
+                    String[] splitData = payload.split(",");
+                    
+                    String data = "Temperature: " + splitData[0] +" Humidity: " +splitData[1];
+                    
+                    App.screen.textAreaForTemperatureAndHumidityAidan.setText(data);
+                } else if(publish.getTopic().toString().equals("CameraPictureAidanCatriel")) {
+     
+                    byte[] decodedBytes = Base64.getDecoder().decode(payload);
+
+                    ByteArrayInputStream bais = new ByteArrayInputStream(decodedBytes);
+                    
+                    Image image = new Image(bais);
+                    
+                    App.screen.ImageTileForCameraAidan.setImage(image);
+                }
+                
+                
+                
+                
+                else if(publish.getTopic().toString().equals("BuzzerDanhHuynh")) {
+                    App.screen.textAreaForBuzzerDanh.setText(payload);
+                } else if(publish.getTopic().toString().equals("CameraTakenDanhHuynh")) {
+                    App.screen.textAreaForMotionDetectorDanh.setText(payload);
+                } else if(publish.getTopic().toString().equals("TemperatureDataDanhHuynh")) {
+                    String[] splitData = payload.split(",");
+                    
+                    String data = "Temperature: " + splitData[0] +" Humidity: " +splitData[1];
+                    
+                    App.screen.textAreaForTemperatureAndHumidityDanh.setText(data);
+                } else if(publish.getTopic().toString().equals("CameraPictureDanhHuynh")) {
+     
+                    byte[] decodedBytes = Base64.getDecoder().decode(payload);
+
+                    ByteArrayInputStream bais = new ByteArrayInputStream(decodedBytes);
+                    
+                    Image image = new Image(bais);
+                    
+                    App.screen.ImageTileForCameraDanh.setImage(image);
+                }
+                
+                
                 
                 System.out.println("Received message: "
                     + publish.getTopic() + " -> "

@@ -16,10 +16,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-//import javafx.application.Application;
-//import javafx.application.Platform;
-//import javafx.scene.Scene;
-//import javafx.stage.Stage;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import java.util.Scanner;
 import com.hivemq.client.mqtt.mqtt5.exceptions.Mqtt5ConnAckException;
 import java.util.Date;
@@ -29,30 +29,33 @@ import java.text.SimpleDateFormat;
 /**
  * JavaFX App
  */
-public class App /*extends Application*/ {
+public class App extends Application {
     
     //Allows the stage be easily accessible
-//    public static Stage theStage;
+    public static Stage theStage;
     public static Thread tempThread;
     public static Thread buzzerThread;
     public static Thread InfraredThread;
-//    @Override
-//    public void start(Stage stage) throws IOException {
-//        var scene = new Scene(new FXScreen(), 1400, 1200);
-//        App.theStage = stage;
-//        
-//        //Set the active scene
-//        theStage.setScene(scene);
-//        theStage.show();
-//        
-//        // Make sure the application quits completely on close
-//        theStage.setOnCloseRequest(t -> {
-//            Platform.exit();
-//            System.exit(0);
-//        });
-//    }
+    public static FXScreen screen;
+    @Override
+    public void start(Stage stage) throws IOException {
+        screen = new FXScreen();
+        
+        var scene = new Scene(screen, 1400, 1200);
+        App.theStage = stage;
+        
+        //Set the active scene
+        theStage.setScene(scene);
+        theStage.show();
+        
+        // Make sure the application quits completely on close
+        theStage.setOnCloseRequest(t -> {
+            Platform.exit();
+            System.exit(0);
+        });
+    }
 
-    public static void main(String[] args) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, InvalidKeyException, SignatureException {
+    public static void main(String[] args) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, InvalidKeyException, SignatureException, InterruptedException {
         boolean run = true;
         Scanner reader = new Scanner(System.in);
         CameraApp ca = new CameraApp();
@@ -78,6 +81,13 @@ public class App /*extends Application*/ {
             }
         }
  
+        Thread t = new Thread(() -> {
+            launch();
+        });
+        
+        t.start();
+        
+        
         Buzzer buzzer = new Buzzer(buzzerThread);
         buzzer.startProcess();
         
@@ -88,11 +98,13 @@ public class App /*extends Application*/ {
         String currentTemp = "0";
         String currentHumid = "0";
         
-
+        System.out.println("Initializing App");
+        Thread.sleep(3000);
+        
         while(run) {
 //            System.out.println("Select choice (Close, Sensor, Camera, Buzzer, Infrared, Key)");
-
-            choice = reader.nextLine();
+//            choice = reader.nextLine()
+            Thread.sleep(1000);
       
             // closing the app
             if(choice.equals("Close")) {
@@ -112,18 +124,20 @@ public class App /*extends Application*/ {
                 
             // calling the camera
             } else if(choice.equals("Camera")) {
-                ca.callCamera();
-                String imgData = ca.getRecentImageBytes();
-                
-                Timestamp ts = new Timestamp(System.currentTimeMillis());
-                m.sendCameraTakenMessage("Picture taken at: " +sdf.format(ts));
-                m.sendCameraPictureMessage(imgData);
+
             // calling the buzzer
             } else if(buzzer.getBuzzer().getState().equals("buzzer turned on >>>")) {
                  
-                 Timestamp ts = new Timestamp(System.currentTimeMillis());
+                Timestamp ts = new Timestamp(System.currentTimeMillis());
                  
-                 m.sendBuzzerMessage("Buzzer" +username +" pressed at: " +sdf.format(ts));
+                m.sendBuzzerMessage("Buzzer" +username +" pressed at: " +sdf.format(ts));
+                 
+                ca.callCamera();
+                String imgData = ca.getRecentImageBytes();
+                
+                Timestamp tb = new Timestamp(System.currentTimeMillis());
+                m.sendCameraTakenMessage("Picture taken at: " +sdf.format(tb));
+                m.sendCameraPictureMessage(imgData);
             // calling the Infrared Motion Sensor
             } else if (choice.equals("Infrared")){
                 System.out.println("Calling Infrared Motion Sensor");
@@ -137,6 +151,5 @@ public class App /*extends Application*/ {
 //                System.out.println("Invalid choice");
 //            }
         }
-//        launch();
     }
 }

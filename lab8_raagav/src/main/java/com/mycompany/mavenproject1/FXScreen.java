@@ -39,6 +39,21 @@ public class FXScreen extends HBox {
     private static boolean running = true;
     private Tile gaugeTile;
     private Tile percentageTile;
+    public TextArea textAreaForBuzzerAidan;
+    public TextArea textAreaForBuzzerDanh;
+    public TextArea textAreaForBuzzerRaagav;
+    public TextArea textAreaForTemperatureAndHumidityDanh;
+    public TextArea textAreaForTemperatureAndHumidityAidan;
+    public TextArea textAreaForTemperatureAndHumidityRaagav;
+    public TextArea textAreaForMotionDetectorDanh;
+    public TextArea textAreaForMotionDetectorAidan;
+    public TextArea textAreaForMotionDetectorRaagav;
+    public Tile ImageTileForCameraDanh;
+    public Tile ImageTileForCameraRaagav;
+    public Tile ImageTileForCameraAidan;
+    
+    
+    
     //Constructor 
     public FXScreen() throws IOException {
         //Start the example thread
@@ -91,15 +106,15 @@ public class FXScreen extends HBox {
 
 
         //Setup tile with TextArea to display output from external program
-        TextArea textAreaForBuzzerAidan = new TextArea();
-        TextArea textAreaForBuzzerDanh = new TextArea();
-        TextArea textAreaForBuzzerRaagav = new TextArea();
-        TextArea textAreaForTemperatureAndHumidityDanh = new TextArea();
-        TextArea textAreaForTemperatureAndHumidityAidan= new TextArea();
-        TextArea textAreaForTemperatureAndHumidityRaagav = new TextArea();
-        TextArea textAreaForMotionDetectorDanh = new TextArea();
-        TextArea textAreaForMotionDetectorAidan = new TextArea();
-        TextArea textAreaForMotionDetectorRaagav = new TextArea();
+        textAreaForBuzzerAidan = new TextArea();
+        textAreaForBuzzerDanh = new TextArea();
+        textAreaForBuzzerRaagav = new TextArea();
+        textAreaForTemperatureAndHumidityDanh = new TextArea();
+        textAreaForTemperatureAndHumidityAidan= new TextArea();
+        textAreaForTemperatureAndHumidityRaagav = new TextArea();
+        textAreaForMotionDetectorDanh = new TextArea();
+        textAreaForMotionDetectorAidan = new TextArea();
+        textAreaForMotionDetectorRaagav = new TextArea();
             
         //Make the TextArea non editable
         textAreaForBuzzerDanh.setEditable(false);
@@ -223,27 +238,30 @@ public class FXScreen extends HBox {
         //set up the Tile for Image
         
         
-        var ImageTileForCameraDanh = TileBuilder.create()
+        ImageTileForCameraDanh = TileBuilder.create()
                 .skinType(SkinType.IMAGE)
                 .prefSize(350, 300)
                 // TODO missing image URL
-                .image(new Image(FXScreen.class.getResourceAsStream("sunny-clip-art.png")))
+//                .image(new Image(FXScreen.class.getResourceAsStream("sunny-clip-art.png")))
                 .title("Danh Image Camera")
                 .build();
-        var ImageTileForCameraAidan = TileBuilder.create()
+        ImageTileForCameraAidan = TileBuilder.create()
                 .skinType(SkinType.IMAGE)
                 .prefSize(350, 300)
                 // TODO missing image URL
 //                .image()
                 .title("Aidan Image Camera")
                 .build();
-        var ImageTileForCameraRaagav = TileBuilder.create()
+        ImageTileForCameraRaagav = TileBuilder.create()
                 .skinType(SkinType.IMAGE)
                 .prefSize(350, 300)
                 // TODO missing image URL
 //               .image()
                 .title("Raagav Image Camera")
                 .build();
+        
+        
+        
         //Add the tiles to VBoxes
         // display clock I and and IV A TextArea tile to display output from the Hello World python program
         var tilesColumn1 = new VBox(textAreaTileForTemperatureAndHumidityDanh,ImageTileForCameraDanh, textAreaTileForBuzzerDanh, textAreaTileForMotionDetectorDanh);
