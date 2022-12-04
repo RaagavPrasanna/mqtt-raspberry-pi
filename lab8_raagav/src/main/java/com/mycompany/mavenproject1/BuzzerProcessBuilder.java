@@ -61,7 +61,6 @@ public class BuzzerProcessBuilder {
 
             String line;
 
-            System.out.println("reached here start process");
             while ((line = reader.readLine()) != null) {
                 //this.theOutput = this.theOutput + line;
                 state = line;
