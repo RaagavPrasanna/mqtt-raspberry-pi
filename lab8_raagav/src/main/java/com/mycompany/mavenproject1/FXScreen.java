@@ -39,6 +39,18 @@ public class FXScreen extends HBox {
     private static boolean running = true;
     private Tile gaugeTile;
     private Tile percentageTile;
+    public TextArea textAreaForBuzzerAidan;
+    public TextArea textAreaForBuzzerDanh;
+    public TextArea textAreaForBuzzerRaagav;
+    public TextArea textAreaForTemperatureAndHumidityDanh;
+    public TextArea textAreaForTemperatureAndHumidityAidan;
+    public TextArea textAreaForTemperatureAndHumidityRaagav;
+    public TextArea textAreaForMotionDetectorDanh;
+    public TextArea textAreaForMotionDetectorAidan;
+    public TextArea textAreaForMotionDetectorRaagav;
+    
+    
+    
     //Constructor 
     public FXScreen() throws IOException {
         //Start the example thread
@@ -91,15 +103,15 @@ public class FXScreen extends HBox {
 
 
         //Setup tile with TextArea to display output from external program
-        TextArea textAreaForBuzzerAidan = new TextArea();
-        TextArea textAreaForBuzzerDanh = new TextArea();
-        TextArea textAreaForBuzzerRaagav = new TextArea();
-        TextArea textAreaForTemperatureAndHumidityDanh = new TextArea();
-        TextArea textAreaForTemperatureAndHumidityAidan= new TextArea();
-        TextArea textAreaForTemperatureAndHumidityRaagav = new TextArea();
-        TextArea textAreaForMotionDetectorDanh = new TextArea();
-        TextArea textAreaForMotionDetectorAidan = new TextArea();
-        TextArea textAreaForMotionDetectorRaagav = new TextArea();
+        textAreaForBuzzerAidan = new TextArea();
+        textAreaForBuzzerDanh = new TextArea();
+        textAreaForBuzzerRaagav = new TextArea();
+        textAreaForTemperatureAndHumidityDanh = new TextArea();
+        textAreaForTemperatureAndHumidityAidan= new TextArea();
+        textAreaForTemperatureAndHumidityRaagav = new TextArea();
+        textAreaForMotionDetectorDanh = new TextArea();
+        textAreaForMotionDetectorAidan = new TextArea();
+        textAreaForMotionDetectorRaagav = new TextArea();
             
         //Make the TextArea non editable
         textAreaForBuzzerDanh.setEditable(false);

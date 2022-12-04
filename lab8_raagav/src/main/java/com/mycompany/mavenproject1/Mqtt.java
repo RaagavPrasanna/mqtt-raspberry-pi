@@ -142,6 +142,44 @@ public class Mqtt {
             try {
                 payload = k.verifyAndReturnInput(UTF_8.decode(publish.getPayload().get()).toString());
                 
+                if(publish.getTopic().toString().equals("BuzzerRaagavPrasanna")) {
+                    App.screen.textAreaForBuzzerRaagav.setText(payload);
+                } else if(publish.getTopic().toString().equals("CameraTakenRaagavPrasanna")) {
+                    App.screen.textAreaForMotionDetectorRaagav.setText(payload);
+                } else if(publish.getTopic().toString().equals("TemperatureDataRaagavPrasanna")) {
+                    String[] splitData = payload.split(",");
+                    
+                    String data = "Temperature: " + splitData[0] +" Humidity: " +splitData[1];
+                    
+                    App.screen.textAreaForTemperatureAndHumidityRaagav.setText(data);
+                }
+                
+                else if(publish.getTopic().toString().equals("BuzzerAidanCatriel")) {
+                    App.screen.textAreaForBuzzerAidan.setText(payload);
+                } else if(publish.getTopic().toString().equals("CameraTakenAidanCatriel")) {
+                    App.screen.textAreaForMotionDetectorAidan.setText(payload);
+                } else if(publish.getTopic().toString().equals("TemperatureDataAidanCatriel")) {
+                    String[] splitData = payload.split(",");
+                    
+                    String data = "Temperature: " + splitData[0] +" Humidity: " +splitData[1];
+                    
+                    App.screen.textAreaForTemperatureAndHumidityAidan.setText(data);
+                }
+                
+                else if(publish.getTopic().toString().equals("BuzzerDanhHuynh")) {
+                    App.screen.textAreaForBuzzerDanh.setText(payload);
+                } else if(publish.getTopic().toString().equals("CameraTakenDanhHuynh")) {
+                    App.screen.textAreaForMotionDetectorDanh.setText(payload);
+                } else if(publish.getTopic().toString().equals("TemperatureDataDanhHuynh")) {
+                    String[] splitData = payload.split(",");
+                    
+                    String data = "Temperature: " + splitData[0] +" Humidity: " +splitData[1];
+                    
+                    App.screen.textAreaForTemperatureAndHumidityDanh.setText(data);
+                }
+                
+                
+                
                 System.out.println("Received message: "
                     + publish.getTopic() + " -> "
                     + payload);
