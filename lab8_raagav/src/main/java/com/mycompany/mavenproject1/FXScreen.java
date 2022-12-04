@@ -48,6 +48,9 @@ public class FXScreen extends HBox {
     public TextArea textAreaForMotionDetectorDanh;
     public TextArea textAreaForMotionDetectorAidan;
     public TextArea textAreaForMotionDetectorRaagav;
+    public Tile ImageTileForCameraDanh;
+    public Tile ImageTileForCameraRaagav;
+    public Tile ImageTileForCameraAidan;
     
     
     
@@ -235,27 +238,30 @@ public class FXScreen extends HBox {
         //set up the Tile for Image
         
         
-        var ImageTileForCameraDanh = TileBuilder.create()
+        ImageTileForCameraDanh = TileBuilder.create()
                 .skinType(SkinType.IMAGE)
                 .prefSize(350, 300)
                 // TODO missing image URL
-                .image(new Image(FXScreen.class.getResourceAsStream("sunny-clip-art.png")))
+//                .image(new Image(FXScreen.class.getResourceAsStream("sunny-clip-art.png")))
                 .title("Danh Image Camera")
                 .build();
-        var ImageTileForCameraAidan = TileBuilder.create()
+        ImageTileForCameraAidan = TileBuilder.create()
                 .skinType(SkinType.IMAGE)
                 .prefSize(350, 300)
                 // TODO missing image URL
 //                .image()
                 .title("Aidan Image Camera")
                 .build();
-        var ImageTileForCameraRaagav = TileBuilder.create()
+        ImageTileForCameraRaagav = TileBuilder.create()
                 .skinType(SkinType.IMAGE)
                 .prefSize(350, 300)
                 // TODO missing image URL
 //               .image()
                 .title("Raagav Image Camera")
                 .build();
+        
+        
+        
         //Add the tiles to VBoxes
         // display clock I and and IV A TextArea tile to display output from the Hello World python program
         var tilesColumn1 = new VBox(textAreaTileForTemperatureAndHumidityDanh,ImageTileForCameraDanh, textAreaTileForBuzzerDanh, textAreaTileForMotionDetectorDanh);

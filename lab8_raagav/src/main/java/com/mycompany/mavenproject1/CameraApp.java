@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Optional;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -104,14 +105,18 @@ public class CameraApp implements IApplicationCamera{
     }
     
     public String getRecentImageBytes() throws FileNotFoundException, IOException {
-        File file = getRecentImage();
-        FileInputStream fis = new FileInputStream(file);
+//        File file = getRecentImage();
+//        FileInputStream fis = new FileInputStream(file);
+//        
+//        byte[] arr = new byte[(int)file.length()];
+//        fis.read(arr);
+//        fis.close();
+//        
+//        String s = Base64.getEncoder().encodeToString(arr);
+
+        byte[] fileContent = FileUtils.readFileToByteArray(getRecentImage());
         
-        byte[] arr = new byte[(int)file.length()];
-        fis.read(arr);
-        fis.close();
-        
-        String s = Base64.getEncoder().encodeToString(arr);
+        String s = Base64.getEncoder().encodeToString(fileContent);
         
         return s;
     }
