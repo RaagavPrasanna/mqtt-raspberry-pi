@@ -13,8 +13,15 @@
 ## Required Functionalities that were not implemented
     - Background: 
         - Unfortunately 2 of us had fallen terribly sick recently for a good amount of time, and that really held us back on our work. As a result, we had to omit a few features for the sake of time and actually getting a functional application.
-        - Passing the signature via the publish payload: 
-            - Due to the lack of time, we had to omit the passing of signatures through publish messages. Currently, we have one keystore that signs and verifies all strings that are published as messages.
+    - Passing the signature via the publish payload: 
+        - Due to the lack of time, we had to omit the passing of signatures through publish messages. 
+        - Currently, we have one keystore that signs and verifies all strings that are published as messages.
+    - Proximity Sensor:
+        - The proxmity sensor was a big pain. 
+        - It would never register motion at the right time and when it did, it would be at a completley random moment. 
+        - We felt as if it wasn't consistent enough and we wanted to properly be able to take a picture. 
+        - Hence we ommitted this feature and implemented the picture taking along with the pressing of the buzzer. 
+        - Perhaps if we really fiddled with it more we could of got it to work properly but for the sake of time, we omitted it.
     
     
 
