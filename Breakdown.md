@@ -10,3 +10,11 @@
     4. Furthermore, the picture taken will be published and displayed on its tile for each user connected.
     5. To exit the application, the "x" button in the top right should be pressed.
 
+## Required Functionalities that were not implemented
+    - Background: 
+        - Unfortunately 2 of us had fallen terribly sick recently for a good amount of time, and that really held us back on our work. As a result, we had to omit a few features for the sake of time and actually getting a functional application.
+        - Passing the signature via the publish payload: 
+            - Due to the lack of time, we had to omit the passing of signatures through publish messages. Currently, we have one keystore that signs and verifies all strings that are published as messages.
+    
+    
+
