@@ -7,7 +7,7 @@
 ########################################################################
 import RPi.GPIO as GPIO
 
-ledPin = 22       # define ledPin
+ledPin = 12       # define ledPin
 sensorPin = 13    # define sensorPin
 
 def setup():
