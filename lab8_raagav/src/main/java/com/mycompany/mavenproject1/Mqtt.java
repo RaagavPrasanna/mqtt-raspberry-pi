@@ -28,6 +28,7 @@ import javafx.scene.image.Image;
  *
  * @author Raagav Prasanna
  */
+ // Allows the user to send and subscribe to topics
 public class Mqtt {
 
     private final Mqtt5BlockingClient client;
@@ -244,6 +245,7 @@ public class Mqtt {
 //                .send();
     }
     
+    // Send a buzzer message
     public void sendBuzzerMessage(String msg) {
         client.publishWith()
                 .topic("Buzzer"+username)
@@ -251,6 +253,7 @@ public class Mqtt {
                 .send();
     }
     
+    // Send a camera taken message
     public void sendCameraTakenMessage(String msg) {
         client.publishWith()
                 .topic("CameraTaken"+username)
@@ -258,6 +261,7 @@ public class Mqtt {
                 .send(); 
     }
     
+    // Send an image
     public void sendCameraPictureMessage(String msg) {
         client.publishWith()
                 .topic("CameraPicture"+username)
@@ -265,6 +269,7 @@ public class Mqtt {
                 .send(); 
     }
     
+    // Send a public key
     public void sendPublicKey() {
         
         byte[] byteKey = k.getPublicKey().getEncoded();
@@ -276,6 +281,7 @@ public class Mqtt {
                 .send(); 
     }
     
+    // Send a temperature taken message
     public void sendTemperatureTakenMessage(String msg) {
         client.publishWith()
                 .topic("TemperatureTaken"+username)
@@ -283,6 +289,7 @@ public class Mqtt {
                 .send();
     }
     
+    // Send temperature and humidity data
     public void sendTemperatureDataMessage(String msg) {
         client.publishWith()
                 .topic("TemperatureData"+username)
