@@ -10,6 +10,7 @@ import java.util.List;
  * @author Tuan Danh Huynh
  */
 
+// Create a buzzer process
 public class BuzzerProcessBuilder {
     
     //Stores the output from the process
