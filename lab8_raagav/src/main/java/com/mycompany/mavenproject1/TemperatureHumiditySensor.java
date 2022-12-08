@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import java.io.IOException;
 
+// Control a temperature and humidity sensor
 public class TemperatureHumiditySensor {
     private Thread tempThread;
     
@@ -28,6 +29,7 @@ public class TemperatureHumiditySensor {
         return humidState;
     }
     
+    // Start the sensor and output its recordings
     public boolean startProcess(){      
         tempState = "0";
         humidState = "0";
