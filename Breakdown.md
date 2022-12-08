@@ -14,6 +14,12 @@
     4. Furthermore, the picture taken will be published and displayed on its tile for each user connected.
     5. To exit the application, the "x" button in the top right should be pressed.
 
+## Specfic design choices
+    1. We decided to open the gui only after the user has entered there mqtt username and password within the console.
+        - The reason we did this is because we didnt want the application to launch unless the user has logged in.
+    2. We display the temperature and humidity in a string format as opposed to gauge tiles.
+        - This was simply to make things easier during the testing phase and it just stuck.
+
 ## Required Functionalities that were not implemented
     - Background: 
         - Unfortunately 2 of us had fallen terribly sick recently for a good amount of time, and that really held us back on our work. 
