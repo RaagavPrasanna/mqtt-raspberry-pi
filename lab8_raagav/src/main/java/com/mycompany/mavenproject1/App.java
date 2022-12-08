@@ -65,7 +65,7 @@ public class App extends Application {
         Mqtt m = null;
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         
-        
+        // Log in to the keystore
         Keys k = new Keys("keystore123", "src/main/resources/ProjectKeystore/ECcertif.ks");
         while(invalidLogin) {
             try {
@@ -81,6 +81,7 @@ public class App extends Application {
             }
         }
  
+        // Start the GUI
         Thread t = new Thread(() -> {
             launch();
         });
@@ -101,6 +102,7 @@ public class App extends Application {
         System.out.println("Initializing App");
         Thread.sleep(3000);
         
+        // Console app
         while(run) {
 //            System.out.println("Select choice (Close, Sensor, Camera, Buzzer, Infrared, Key)");
 //            choice = reader.nextLine()
