@@ -28,8 +28,8 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 /**
- *
- * @author raaga
+ * Allows the storing of keypairs in a keystore object
+ * @author raagav
  */
 public class Keys {
     private KeyStore ks;
@@ -47,6 +47,7 @@ public class Keys {
         System.out.println("Successfully loaded KeyStore");
     }
     
+    // Get the key pair
     private KeyPair getKeyPair() throws NoSuchAlgorithmException, UnrecoverableKeyException, KeyStoreException {
         Key key = ks.getKey(storeAlias, storePass.toCharArray());
 //        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("DSA");
@@ -68,6 +69,7 @@ public class Keys {
         return kp.getPublic();
     }
     
+    // Store a key in the key store
     public void storeKeyInKeyStore(String keyAlias, String keyPsswd, String storePass) throws NoSuchAlgorithmException, KeyStoreException, IOException, CertificateException {
         KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
         keyGenerator.init(256);
@@ -89,6 +91,7 @@ public class Keys {
         return sk;
     }
     
+    // Sign a string and verify that the signature is correct
     public String verifyAndReturnInput(String input) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException, UnsupportedEncodingException, KeyStoreException, UnrecoverableKeyException, NoSuchProviderException {
         Signature sign = Signature.getInstance("SHA256withECDSA", "SunEC");
         sign.initSign(kp.getPrivate());
@@ -108,6 +111,7 @@ public class Keys {
          
     }
     
+    // Store the key store
     private void storeKeyStore(String storePass) throws IOException, KeyStoreException, NoSuchAlgorithmException, CertificateException{
         try(FileOutputStream keyStoreOutputStream = new FileOutputStream(storePath)) {
             ks.store(keyStoreOutputStream, storePass.toCharArray());
