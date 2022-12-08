@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Tuan Danh Huynh
  */
-
+// Create an infrared motion sensor process
 public class InfraredMotionSensorProcessBuilder {
     
     //Stores the output from the process
