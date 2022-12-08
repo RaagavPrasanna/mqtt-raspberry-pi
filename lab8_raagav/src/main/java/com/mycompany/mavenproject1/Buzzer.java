@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+// Controls a buzzer
 public class Buzzer {
     private Thread buzzerThread;
     private BuzzerProcessBuilder buzzer;
@@ -18,6 +19,7 @@ public class Buzzer {
         return this.buzzer;
     }
     
+    // Make the buzzer buzz
     public boolean startProcess(){      
         this.buzzerThread = new Thread(() ->{
             
