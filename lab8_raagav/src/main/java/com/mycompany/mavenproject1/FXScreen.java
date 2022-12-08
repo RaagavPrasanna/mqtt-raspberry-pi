@@ -283,7 +283,7 @@ public class FXScreen extends HBox {
         this.setSpacing(5);
     }
 
-    //Setup a thread  update temperature and himidity (threaded)
+    //Set up a thread, update temperature and humidity (threaded)
 private void TemperatureAndHimidityOutputThread() {
         Thread tempThread = new Thread(() -> {
            while(running) {
