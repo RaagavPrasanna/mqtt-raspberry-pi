@@ -5,12 +5,14 @@ import java.util.logging.Logger;
 
 import java.io.IOException;
 
+// Control an infrared motion sensor
 public class InfraredMotionSensor {
     private Thread InfraredThread;
     public InfraredMotionSensor(Thread thread){
         InfraredThread = thread;
     }
 
+    // Check for motion
     public boolean startProcess(){      
         this.InfraredThread = new Thread(() ->{
             String path = "src/main/Python/SenseLED.py";
